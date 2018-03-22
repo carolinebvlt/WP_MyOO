@@ -14,7 +14,11 @@ class MyOO
   }
   public function ajout_page(){
 
-    $content = "mon texte";
+    $_tartines = ['a', 'b', 'c', 'd'];
+    $content = "<h1>Test</h1>";
+    foreach ($_tartines as $tartine) {
+      $content = $content.'<p>'.$tartine.'</p>';
+    }
     $postTitle = 'BLOP';
 
     $args = [
@@ -35,44 +39,6 @@ class MyOO
         ];
         $insert_id = wp_insert_post( $page );
     }
-
-    // if(!$query->post){
-    //   $page = [
-    //       'post_title'   => $postTitle,
-    //       'post_content' => $content,
-    //       'post_status'  => 'publish',
-    //       'post_author'  => 1,
-    //       'post_type'    => 'page',
-    //       'post_parent'  => 0
-    //   ];
-    //   $insert_id = wp_insert_post( $page );
-    }
-    // global $wpdb;
-
-    // $query = $wpdb->prepare(
-    //     'SELECT ID FROM ' . $wpdb->posts . '
-    //         WHERE post_title = %s
-    //         AND post_type = \'page\'
-    //         AND post_status = \'publish\'',
-    //     $postTitle
-    // );
-    // $wpdb->query( $query );
-
-
-    // if ( $wpdb->num_rows ) {
-    //     // Title already exists
-    // }
-    // else {
-    //   $page = [
-    //       'post_title'   => $postTitle,
-    //       'post_content' => $content,
-    //       'post_status'  => 'publish',
-    //       'post_author'  => 1,
-    //       'post_type'    => 'page',
-    //       'post_parent'  => 0
-    //   ];
-    //   $insert_id = wp_insert_post( $page );
-    // }
-  // }
+  }
 }
 new MyOO();
