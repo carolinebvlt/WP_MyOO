@@ -1,5 +1,11 @@
 <?php
-class MyOO_Menu
+
+/*
+  - création custom_post_type 'tartine' -> génère l'onglet 'Tartines' du dashboard
+  - meta box pour définir la composition d'une tartine (max 5 ingrédients)
+*/
+
+class MyOO_CPT_Tartines
 {
   public function __construct(){
     add_action('init', [$this, 'register_tartine_type'], 0 );
