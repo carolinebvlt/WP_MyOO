@@ -1,14 +1,12 @@
 <?php
-class MyOO_onglet
+class MyOO_Settings
 {
   public function __construct(){
     add_action('admin_menu', [$this, 'add_admin_menu']);
     add_action('admin_init', [$this, 'register_portions_settings']);
   }
   public function add_admin_menu(){
-    add_menu_page('My Orders Organizer', 'Orders Organizer', 'manage_options', 'myoo', [$this, 'onglet_render'], 'dashicons-book-alt', 26 );
     add_submenu_page('myoo', 'Paramètres', 'Paramètres', 'manage_options', 'myoo_params', [$this, 'params_render']);
-
   }
   public function register_portions_settings(){
     register_setting( 'portions_settings', 'S_tartines' );
@@ -38,11 +36,6 @@ class MyOO_onglet
     register_setting( 'portions_settings', 'supplement_fruit' );
   }
 
-/* ---------- RENDERS ---------- */
-
-  public function onglet_render(){
-    echo '<h1>'.get_admin_page_title().'</h1>';
-  }
   public function params_render(){
     echo '<div class="wrap theme-options-page"><h1>'.get_admin_page_title().'</h1></div>';
     ?>
@@ -53,7 +46,7 @@ class MyOO_onglet
         do_settings_sections('portions_settings');
         ?>
         <fieldset>
-          <legend><div class="wrap theme-options-page"><h2>Portions</h2></div></legend>
+          <legend><div class="wrap theme-options-page"><h2>Portions</h2></div></legend><br/>
           <table>
             <tr>
               <th><label>Le Benjamin : </label></th>
@@ -74,7 +67,7 @@ class MyOO_onglet
               <td>1/<input type="number" min=0 max=5 name="L_baguette" value="<?php echo esc_attr( get_option('L_baguette') ); ?>" /> de baguette</td>
             </tr>
           </table>
-        </fieldset>
+        </fieldset><br/>
 
         <fieldset>
           <legend><div class="wrap theme-options-page"><h2>Prix</h2></div></legend>
