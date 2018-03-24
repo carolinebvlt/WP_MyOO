@@ -10,14 +10,12 @@ class MyOO_Registration_Module
     $content = $this->register_form();
     $postTitle = 'Inscription';
 
-    $args = [
-      'post_status'=> 'publish',
-      'post_type'=> 'page',
-      'post_title'=> $postTitle
-    ];
-    $query = new WP_Query( $args );
+    global $wpdb;
+    $sql = "SELECT * FROM {$wpdb->prefix}posts WHERE post_title = '$postTitle' AND post_status = 'publish' AND post_type = 'page' ";
+    $row = $wpdb->get_row($sql);
 
-    if($query->post->post_title !== $postTitle){
+
+    if(is_null($row)){
         $page = [
             'post_title'   => $postTitle,
             'post_content' => $content,
@@ -34,14 +32,11 @@ class MyOO_Registration_Module
     $content = $this->account_page();
     $postTitle = 'Mon compte';
 
-    $args = [
-      'post_status'=> 'publish',
-      'post_type'=> 'page',
-      'post_title'=> $postTitle
-    ];
-    $query = new WP_Query( $args );
+    global $wpdb;
+    $sql = "SELECT * FROM {$wpdb->prefix}posts WHERE post_title = '$postTitle' AND post_status = 'publish' AND post_type = 'page' ";
+    $row = $wpdb->get_row($sql);
 
-    if($query->post->post_title !== $postTitle){
+    if(is_null($row)){
         $page = [
             'post_title'   => $postTitle,
             'post_content' => $content,
