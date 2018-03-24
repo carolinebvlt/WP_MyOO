@@ -3,15 +3,20 @@ class MyOO_onglet
 {
   public function __construct(){
     add_action('admin_menu', [$this, 'add_admin_menu']);
-    add_action('admin_init', [$this, 'register_tartines_settings']);
+    add_action('admin_init', [$this, 'register_portions_settings']);
   }
   public function add_admin_menu(){
     add_menu_page('My Orders Organizer', 'Orders Organizer', 'manage_options', 'myoo', [$this, 'onglet_render'], 'dashicons-book-alt', 26 );
     add_submenu_page('myoo', 'Paramètres', 'Paramètres', 'manage_options', 'myoo_params', [$this, 'params_render']);
 
   }
-  public function register_tartines_settings(){
-    register_setting( 'tartines_settings', 'portions' );
+  public function register_portions_settings(){
+    register_setting( 'portions_settings', 'S_tartines' );
+    register_setting( 'portions_settings', 'M_tartines' );
+    register_setting( 'portions_settings', 'L_tartines' );
+    register_setting( 'portions_settings', 'S_baguette' );
+    register_setting( 'portions_settings', 'M_baguette' );
+    register_setting( 'portions_settings', 'L_baguette' );
   }
 
 /* ---------- RENDERS ---------- */
@@ -25,15 +30,32 @@ class MyOO_onglet
     <div class="wrap">
       <form method="post" action="options.php">
         <?php
-        settings_fields('tartines_settings');
-        do_settings_sections('tartines_settings');
+        settings_fields('portions_settings');
+        do_settings_sections('portions_settings');
         ?>
-        <table class="form-table">
-            <tr valign="top">
-            <th scope="row">Portions</th>
-            <td><input type="text" name="portions" value="<?php echo esc_attr( get_option('portions') ); ?>" /></td>
-            </tr>
+        <table>
+          <tr>
+            <th><label>Le Benjamin : </label></th>
+            <td><input type="number" min=0 max=10 name="S_tartines" value="<?php echo esc_attr( get_option('S_tartines') ); ?>" /> tranches de pain </td>
+            <td>ou</td>
+            <td>1/<input type="number" min=0 max=5 name="S_baguette" value="<?php echo esc_attr( get_option('S_baguette') ); ?>" /> de baguette</td>
+          </tr>
+          <tr>
+            <th><label>La Cadette : </label></th>
+            <td><input type="number" min=0 max=10 name="M_tartines" value="<?php echo esc_attr( get_option('M_tartines') ); ?>" /> tranches de pain </td>
+            <td>ou</td>
+            <td>1/<input type="number" min=0 max=5 name="M_baguette" value="<?php echo esc_attr( get_option('M_baguette') ); ?>" /> de baguette</td>
+          </tr>
+          <tr>
+            <th><label>L'Ainé : </label></th>
+            <td><input type="number" min=0 max=10 name="L_tartines" value="<?php echo esc_attr( get_option('L_tartines') ); ?>" /> tranches de pain </td>
+            <td>ou</td>
+            <td>1/<input type="number" min=0 max=5 name="L_baguette" value="<?php echo esc_attr( get_option('L_baguette') ); ?>" /> de baguette</td>
+          </tr>
         </table>
+
+
+
         <?php
         submit_button('Enregistrer', 'primary', 'submit_tartines_settings', true);
         ?>
