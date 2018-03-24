@@ -12,8 +12,8 @@ class MyOO
     new MyOO_CPT_Tartines();
     include_once plugin_dir_path( __FILE__ ).'/MyOO_Orders_Organizer.php';
     new MyOO_Orders_Organizer();
-    // include_once plugin_dir_path( __FILE__ ).'/MyOO_Page_Builder.php';
-    // new MyOO_Page_Builder();
+    include_once plugin_dir_path( __FILE__ ).'/MyOO_Registration_Module.php';
+    new MyOO_Registration_Module();
   }
 }
 new MyOO();

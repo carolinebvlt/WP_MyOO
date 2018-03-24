@@ -16,7 +16,17 @@ class MyOO_Orders_Organizer
 
   public function  home_render(){
     echo '<div class="wrap theme-options-page"><h1>'.get_admin_page_title().'</h1></div>';
-    echo '<p>Coming soon</p>';
+    ?>
+    <h2>Commandes</h2>
+    <p>Récapitulatif des commandes du jour</p>
+    <h2>Statistiques</h2>
+    <p>Statistiques des ventes</p>
+    <h2>Paramètres</h2>
+    <ul>
+      <li>- Portions proposées</li>
+      <li>- Prix</li>
+    </ul>
+    <?php
   }
 
 }
