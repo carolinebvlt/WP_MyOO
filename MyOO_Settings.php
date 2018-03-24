@@ -2,7 +2,7 @@
 class MyOO_Settings
 {
   public function __construct(){
-    add_action('admin_menu', [$this, 'add_admin_menu']);
+    add_action('admin_menu', [$this, 'add_admin_menu'], 50);
     add_action('admin_init', [$this, 'register_portions_settings']);
   }
   public function add_admin_menu(){

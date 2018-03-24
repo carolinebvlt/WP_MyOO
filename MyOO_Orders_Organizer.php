@@ -2,7 +2,11 @@
 class MyOO_Orders_Organizer
 {
   public function __construct(){
-    add_action('admin_menu', [$this, 'add_admin_menu']);
+    add_action('admin_menu', [$this, 'add_admin_menu'], 20);
+    include_once plugin_dir_path( __FILE__ ).'/MyOO_Orders.php';
+    new MyOO_Orders();
+    include_once plugin_dir_path( __FILE__ ).'/MyOO_Statistics.php';
+    new MyOO_Statistics();
     include_once plugin_dir_path( __FILE__ ).'/MyOO_Settings.php';
     new MyOO_Settings();
   }
@@ -11,7 +15,8 @@ class MyOO_Orders_Organizer
   }
 
   public function  home_render(){
-    echo '<h1>'.get_admin_page_title().'</h1>';
+    echo '<div class="wrap theme-options-page"><h1>'.get_admin_page_title().'</h1></div>';
+    echo '<p>Coming soon</p>';
   }
 
 }
