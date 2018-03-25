@@ -1,4 +1,8 @@
 <?php
+/*
+  - Ajout sous-menu "Statistics"
+*/
+
 class MyOO_Statistics
 {
   public function __construct(){

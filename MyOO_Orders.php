@@ -1,12 +1,18 @@
 <?php
+/*
+  - Ajout sous-menu "Orders"
+*/
+
 class MyOO_Orders
 {
   public function __construct(){
     add_action('admin_menu', [$this, 'add_admin_menu'], 30);
   }
+
   public function add_admin_menu(){
     add_submenu_page('myoo', 'Commandes', 'Commandes', 'manage_options', 'myoo_orders', [$this, 'orders_render']);
   }
+  
   public function orders_render(){
     $date = new DateTime();
     echo '<div class="wrap theme-options-page"><h1>'.get_admin_page_title().'</h1></div><br/>';

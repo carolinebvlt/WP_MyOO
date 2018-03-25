@@ -1,4 +1,9 @@
 <?php
+/*
+  - Ajout de l'onglet "Orders Organizer" dans le menu du dashboard
+  - Include : Orders, Statistics, Settings
+*/
+
 class MyOO_Orders_Organizer
 {
   public function __construct(){

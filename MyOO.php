@@ -14,6 +14,8 @@ class MyOO
     new MyOO_Orders_Organizer();
     include_once plugin_dir_path( __FILE__ ).'/MyOO_Registration_Module.php';
     new MyOO_Registration_Module();
+    include_once plugin_dir_path( __FILE__ ).'/MyOO_Account_Module.php';
+    new MyOO_Account_Module();
   }
 }
 new MyOO();

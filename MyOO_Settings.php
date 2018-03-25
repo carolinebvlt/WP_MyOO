@@ -1,4 +1,9 @@
 <?php
+/*
+  - Ajout sous-menu "Settings"
+  - Créations d'options : portions, prix
+*/
+
 class MyOO_Settings
 {
   public function __construct(){
