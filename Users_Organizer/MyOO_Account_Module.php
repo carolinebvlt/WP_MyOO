@@ -1,6 +1,7 @@
 <?php
 /*
   - Création d'une page "My account"
+  - Connexion form
   - Connexion : $_SESSION['connected'] === true
 */
 
@@ -39,6 +40,7 @@ class MyOO_Account_Module
       return "<form method='post' action=''>
                 <input type='text' name='email' placeholder='Votre email'/>
                 <input type='password' name='password' placeholder='Mot de passe'/>
+                <input type='submit' name='submit_connexion' value='Se connecter'/>
               </form>";
     }
   }

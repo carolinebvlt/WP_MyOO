@@ -1,7 +1,9 @@
 <?php
 /*
   - Création d'une page "Registration" + table DB 'tartinette_users'
-  - noms des variables register_form / DB (method 'post', action '')
+  - Création d'un onglet "My Users" dans le menu du dashboard
+  - Enregistre les inscriptions
+  - noms des variables register_form / DB
     - last_name
     - first_name
     - phone
