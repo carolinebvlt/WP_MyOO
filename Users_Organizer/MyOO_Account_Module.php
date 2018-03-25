@@ -1,7 +1,7 @@
 <?php
 /*
   - Création d'une page "My account"
-  - Connexion : $_SESSION['connected'] === true 
+  - Connexion : $_SESSION['connected'] === true
 */
 
 class MyOO_Account_Module
@@ -36,8 +36,12 @@ class MyOO_Account_Module
       return 'Hello you !';
     }
     else{
-      return 'You are not connected';
+      return "<form method='post' action=''>
+                <input type='text' name='email' placeholder='Votre email'/>
+                <input type='password' name='password' placeholder='Mot de passe'/>
+              </form>";
     }
   }
 
-}
+
+} // end class

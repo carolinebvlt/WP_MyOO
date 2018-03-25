@@ -16,6 +16,7 @@ class MyOO
     new MyOO_Registration_Module();
     include_once plugin_dir_path( __FILE__ ).'/Users_Organizer/MyOO_Account_Module.php';
     new MyOO_Account_Module();
+    register_activation_hook(__FILE__, ['MyOO_Registration_Module', 'install_db']);
   }
 }
 new MyOO();
