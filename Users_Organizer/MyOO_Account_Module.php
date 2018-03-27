@@ -67,15 +67,68 @@ class MyOO_Account_Module
 
   public function my_account_html(){
     return "<div>
-              <span>Tribu ".$_SESSION['user_data']->tribu."</span>
+              <h2>Tribu ".$_SESSION['user_data']->tribu."</h2>
               <form method='post' action=''>
-                <input type='button' name='child1' onclick='hop()' value='Child one'/>
-                <input type='button' name='child2' onclick='hophop()' value='Child two'/>
-                <input type='submit' name='add_child' value='Add'/>
+                <div>
+                  <div><input style='float:left' type='button' name='child1' onclick='hop()' value='Jessie'/></div><br/>
+                  <div><input type='button' name='child2' onclick='hophop()' value='James'/></div><br/>
+                  <div><input type='submit' name='add_child' value='Add a child'/></div>
+                </div>
               </form>
             </div>
-            <div id='my_forms'></div>
-            <h1>Ma commande </h1>";
+            <div style='display:none' id='my_forms'>
+            <form action='' method='post'>
+              <div>
+                <input type='text' placeholder='Ecole'/>
+                <input type='text' placeholder='Classe'>
+              </div><br/>
+              <div>
+                <h3>Like</h3>
+                <input type='checkbox' name='fromage' value='Fromage' />Fromage
+                <input type='checkbox' name='italien' value='Italien' />Italien
+                <input type='checkbox' name='halal' value='Halal' />Halal
+              </div>
+              <div>
+                <h3>Dislike</h3>
+                <input type='checkbox' name='beurre' value='Beurre' />Beurre
+                <input type='checkbox' name='salade' value='Salade' />Salade
+                <input type='checkbox' name='legumaise' value='Légumaise' />Légumaise
+              </div>
+              <div>
+                <h3>Fruit</h3>
+                <input type='radio' name='fruit' value='Oui' />Oui
+                <input type='radio' name='fruit' value='Non' />Non
+              </div>
+              <div>
+                <h3>Appétit</h3>
+                <input type='radio' name='portion' value='Benjamin' />Benjamin <i>(2 tartines ou 1/4 de baguette)</i>
+                <input type='radio' name='portion' value='Cadette' />Cadette <i>(4 tartines ou 1/3 de baguette)</i>
+                <input type='radio' name='portion' value='Ainé' />Ainé <i>(6 tartines ou 1/2 de baguette)</i>
+              </div>
+              <div>
+                <h3>Commande pour :</h3>
+                <input type='checkbox' name='lun' value='lun' />Lun
+                <input type='checkbox' name='mar' value='mar' />Mar
+                <input type='checkbox' name='mer' value='mer' />Mer
+                <input type='checkbox' name='jeu' value='jeu' />Jeu
+                <input type='checkbox' name='ven' value='ven' />Ven
+              </div>
+              <input type='submit' name='save_choices' value='Ok'/>
+            </form>
+            </div>
+            <h1>Ma commande </h1>
+            <div>
+              <div>
+                Jessie : . x . tartines <br/>
+                James : . x 1/x de baguette <br/>
+              </div><br/>
+              <div class='wrap'>
+                <strong>Total : </strong> .,. €
+              </div><br/>
+              <div>
+                <input type='submit' name='commander' value='Commander' />
+              </div>
+            </div>";
   }
 
   public function enqueue_my_script(){
