@@ -12,11 +12,9 @@ class MyOO
     new MyOO_CPT_Tartines();
     include_once plugin_dir_path( __FILE__ ).'/Orders_Organizer/MyOO_Orders_Organizer.php';
     new MyOO_Orders_Organizer();
-    include_once plugin_dir_path( __FILE__ ).'/Users_Organizer/MyOO_Registration_Module.php';
-    new MyOO_Registration_Module();
-    include_once plugin_dir_path( __FILE__ ).'/Users_Organizer/MyOO_Account_Module.php';
-    new MyOO_Account_Module();
-    register_activation_hook(__FILE__, ['MyOO_Registration_Module', 'install_db']);
+    include_once plugin_dir_path( __FILE__ ).'/Users_Organizer/MyOO_Users_Organizer.php';
+    new MyOO_Users_Organizer();
+    register_activation_hook(__FILE__, ['MyOO_Users_Organizer', 'install_db']);
   }
 }
 new MyOO();
