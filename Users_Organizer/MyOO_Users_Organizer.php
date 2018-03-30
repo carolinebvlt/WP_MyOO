@@ -6,26 +6,12 @@ class MyOO_Users_Organizer
   public function __construct(){
     add_action('init', [$this, 'add_account_page']);
     add_action('admin_menu', [$this, 'add_admin_menu_users'], 20);
-    add_action('wp_loaded', [$this, 'save_new_user']);
+    add_action('wp_loaded', [$this, 'which_action']);
+    add_action('wp', [$this, 'enqueue_my_script']);
   }
 
   public function add_admin_menu_users(){
     add_menu_page('My Users', 'My Users', 'manage_options', 'myoo_users', [$this, 'my_users_render'], 'dashicons-groups', 27 );
-  }
-
-  public function install_db(){
-    global $wpdb;
-    $sql = "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}tartinette_users (
-              `id` INT NOT NULL AUTO_INCREMENT ,
-              `last_name` VARCHAR(20) NOT NULL ,
-              `first_name` VARCHAR(20) NOT NULL ,
-              `phone` VARCHAR(10) NOT NULL ,
-              `email` VARCHAR(30) NOT NULL ,
-              `pass_h` TEXT NOT NULL ,
-              `tribu` VARCHAR(20) NOT NULL ,
-              PRIMARY KEY (`id`),
-              UNIQUE (`email`)) ENGINE = InnoDB;" ;
-    $wpdb->query($sql);
   }
 
   public function add_account_page(){
@@ -50,7 +36,21 @@ class MyOO_Users_Organizer
     }
   }
 
-  public function save_new_user(){
+  public function which_action(){
+    if(isset($_POST['submit_registration'])){
+      $this->save_new_user();
+    }
+    elseif(isset($_POST['submit_connexion'])){
+      $this->connexion();
+    }
+  }
+
+  public function enqueue_my_script(){
+    wp_register_script('my_forms_script', plugin_dir_url(__FILE__) . '../assets/my_forms_script.js');
+    wp_enqueue_script('my_forms_script');
+  }
+
+  public function save_new_user(){ /*AC*/
     if (
           (isset($_POST['last_name']) && !empty($_POST['last_name'])) &&
           (isset($_POST['first_name']) && !empty($_POST['first_name'])) &&
@@ -81,6 +81,28 @@ class MyOO_Users_Organizer
     }
   }
 
+  public function connexion(){
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    global $wpdb;
+    $data = $wpdb->get_row( "SELECT * FROM {$wpdb->prefix}tartinette_users WHERE email = '$email' ");
+    if($data->pass_h === sha1($password)){
+      $_SESSION['connected'] = true;
+      $_SESSION['user_data'] = $data;
+    }
+    if($_SESSION['connected'] === true){
+      global $wpdb;
+      $sql = "SELECT * FROM {$wpdb->prefix}posts WHERE post_title = 'Mon compte' AND post_status = 'publish' AND post_type = 'page' ";
+      $row = $wpdb->get_row($sql);
+      $id_page = $row->ID;
+      $html = $this->my_account_html();
+      wp_update_post([
+        'ID' => $id_page,
+        'post_content' => $html
+      ]);
+    }
+  }
+
 /* ---------------- HTML --------------- */
 
   public function my_users_render(){
@@ -102,10 +124,11 @@ class MyOO_Users_Organizer
   }
 
   public function account_home_html(){
-    return '<div id="home" class="wrap">
-              <input style="margin:auto; display:block" type="button" value="Se connecter" />
+    // home + register_form + connexion_form
+    return '<div id="home_buttons" class="wrap">
+              <input style="margin:auto; display:block" onclick="show(connexion_form,home_buttons)" type="button" value="Se connecter" />
               <p style="text-align:center">ou</p>
-              <input style="margin:auto; display:block" type="button" value="S\'inscrire" />
+              <input style="margin:auto; display:block" onclick="show(register_form,home_buttons)" type="button" value="S\'inscrire" />
             </div>
             <div id="register_form" class="wrap" style="display:none">
               <form action="" method="post">
@@ -116,7 +139,7 @@ class MyOO_Users_Organizer
                 <input type="text" name="email" placeholder="Email"/>
                 <input type="password" name="password" placeholder="Mot de passe"/>
                 <input type="password" name="password_check" placeholder="Confirmation du mot de passe"/>
-                <input type="submit" name="submit_registration" value="S\'inscrire">
+                <input type="submit" name="submit_registration" onclick="show(connexion_form, register_form)" value="S\'inscrire">
               </form>
             </div>
             <div id="connexion_form" class="wrap" style="display:none">
@@ -128,6 +151,70 @@ class MyOO_Users_Organizer
             </div>';
   }
 
-
+  public function my_account_html(){
+    return "<div>
+              <h2 >Tribu ".$_SESSION['user_data']->tribu."</h2>
+              <form method='post' action=''>
+                <div>
+                  <div><input style='float:left' type='button' name='child1' onclick='just_show(my_forms)' value='Jessie'/></div><br/>
+                  <div><input type='button' name='child2' onclick='just_show(my_forms)' value='James'/></div><br/>
+                  <div><input type='submit' name='add_child' value='Add a child'/></div>
+                </div>
+              </form>
+            </div>
+            <div style='display:none' id='my_forms'>
+            <form action='' method='post'>
+              <div>
+                <input type='text' placeholder='Ecole'/>
+                <input type='text' placeholder='Classe'>
+              </div><br/>
+              <div>
+                <h3>Like</h3>
+                <input type='checkbox' name='fromage' value='Fromage' />Fromage
+                <input type='checkbox' name='italien' value='Italien' />Italien
+                <input type='checkbox' name='halal' value='Halal' />Halal
+              </div>
+              <div>
+                <h3>Dislike</h3>
+                <input type='checkbox' name='beurre' value='Beurre' />Beurre
+                <input type='checkbox' name='salade' value='Salade' />Salade
+                <input type='checkbox' name='legumaise' value='Légumaise' />Légumaise
+              </div>
+              <div>
+                <h3>Fruit</h3>
+                <input type='radio' name='fruit' value='Oui' />Oui
+                <input type='radio' name='fruit' value='Non' />Non
+              </div>
+              <div>
+                <h3>Appétit</h3>
+                <input type='radio' name='portion' value='Benjamin' />Benjamin <i>(2 tartines ou 1/4 de baguette)</i>
+                <input type='radio' name='portion' value='Cadette' />Cadette <i>(4 tartines ou 1/3 de baguette)</i>
+                <input type='radio' name='portion' value='Ainé' />Ainé <i>(6 tartines ou 1/2 de baguette)</i>
+              </div>
+              <div>
+                <h3>Commande pour :</h3>
+                <input type='checkbox' name='lun' value='lun' />Lun
+                <input type='checkbox' name='mar' value='mar' />Mar
+                <input type='checkbox' name='mer' value='mer' />Mer
+                <input type='checkbox' name='jeu' value='jeu' />Jeu
+                <input type='checkbox' name='ven' value='ven' />Ven
+              </div>
+              <input type='submit' name='save_choices' value='Ok'/>
+            </form>
+            </div>
+            <h1>Ma commande </h1>
+            <div>
+              <div>
+                Jessie : . x . tartines <br/>
+                James : . x 1/x de baguette <br/>
+              </div><br/>
+              <div class='wrap'>
+                <strong>Total : </strong> .,. €
+              </div><br/>
+              <div>
+                <input type='submit' name='commander' value='Commander' />
+              </div>
+            </div>";
+  }
 
 } // end class

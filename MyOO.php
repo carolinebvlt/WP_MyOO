@@ -14,7 +14,9 @@ class MyOO
     new MyOO_Orders_Organizer();
     include_once plugin_dir_path( __FILE__ ).'/Users_Organizer/MyOO_Users_Organizer.php';
     new MyOO_Users_Organizer();
-    register_activation_hook(__FILE__, ['MyOO_Users_Organizer', 'install_db']);
+    include_once plugin_dir_path( __FILE__ ).'MyOO_DB_Installer.php';
+    new MyOO_DB_Installer();
+    register_activation_hook(__FILE__, ['MyOO_DB_Installer', 'install_db']);
   }
 }
 new MyOO();
