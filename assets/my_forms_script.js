@@ -1,5 +1,8 @@
-function hop(){
-  var div = document.getElementById('my_forms');
-  div.style.display = "block";
-  console.log('hi');
+function show(show,hide){
+  show.style.display = "block";
+  hide.style.display = "none";
+}
+function just_show(show)
+{
+  show.style.display = "block";
 }
