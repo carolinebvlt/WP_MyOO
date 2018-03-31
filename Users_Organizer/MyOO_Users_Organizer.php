@@ -45,6 +45,8 @@ class MyOO_Users_Organizer
     }
     elseif (isset($_POST['save_choices'])){
       $this->save_child();
+      $this->save_preferences();
+      $this->temp_order();
     }
   }
 
@@ -55,12 +57,13 @@ class MyOO_Users_Organizer
 
   public function save_new_user(){ /*AC*/
     if (
-          (isset($_POST['last_name']) && !empty($_POST['last_name'])) &&
-          (isset($_POST['first_name']) && !empty($_POST['first_name'])) &&
-          (isset($_POST['phone']) && !empty($_POST['phone'])) &&
-          (isset($_POST['email']) && !empty($_POST['email'])) &&
-          (isset($_POST['password']) && !empty($_POST['password']) && $_POST['password'] === $_POST['password_check']) &&
-          (isset($_POST['tribu']) && !empty($_POST['tribu']))
+          (isset($_POST['last_name'])   && !empty($_POST['last_name']))   &&
+          (isset($_POST['first_name'])  && !empty($_POST['first_name']))  &&
+          (isset($_POST['phone'])       && !empty($_POST['phone']))       &&
+          (isset($_POST['email'])       && !empty($_POST['email']))       &&
+          (isset($_POST['password'])    && !empty($_POST['password'])     &&
+            $_POST['password'] === $_POST['password_check'])              &&
+          (isset($_POST['tribu'])       && !empty($_POST['tribu']))
         ){
       global $wpdb;
       $row = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}tartinette_users WHERE email = '$email'");
@@ -101,10 +104,10 @@ class MyOO_Users_Organizer
 
   public function save_child(){
     if (
-          (isset($_POST['last_name']) && !empty($_POST['last_name'])) &&
-          (isset($_POST['first_name']) && !empty($_POST['first_name'])) &&
-          (isset($_POST['school']) && !empty($_POST['school'])) &&
-          (isset($_POST['classroom']) && !empty($_POST['classroom']))
+          (isset($_POST['last_name'])   && !empty($_POST['last_name']))   &&
+          (isset($_POST['first_name'])  && !empty($_POST['first_name']))  &&
+          (isset($_POST['school'])      && !empty($_POST['school']))      &&
+          (isset($_POST['classroom'])   && !empty($_POST['classroom']))
         ){
           global $wpdb;
           $last_name = $_POST['last_name'];
@@ -122,7 +125,64 @@ class MyOO_Users_Organizer
         }
   }
 
-  public function hello(){
+  public function save_preferences(){
+    global $wpdb;
+    $id_child       = $wpdb->insert_id;
+
+    $classique      = (isset($_POST['classique']))      ? true : false;
+    $dago           = (isset($_POST['dago']))           ? true : false;
+    $fromage        = (isset($_POST['fromage']))        ? true : false;
+    $autre_fromage  = (isset($_POST['autre_fromage']))  ? true : false;
+    $italien        = (isset($_POST['italien']))        ? true : false;
+    $halal          = (isset($_POST['halal']))          ? true : false;
+
+    $beurre         = (isset($_POST['beurre']))         ? true : false;
+    $salade         = (isset($_POST['salade']))         ? true : false;
+    $legume_grille  = (isset($_POST['legume_grille']))  ? true : false;
+    $legumaise      = (isset($_POST['legumaise']))      ? true : false;
+    $pesto          = (isset($_POST['pesto']))          ? true : false;
+
+    $fruit          = ($_POST['fruit'] === 'oui')       ? true : false;
+
+    $portion = $_POST['portion'];
+
+    $row = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}tartinette_preferences WHERE id_child = '$id_child' ");
+    if (is_null($row)) {
+        $wpdb->insert("{$wpdb->prefix}tartinette_preferences", [
+          'id_child'  => $id_child,
+          'fruit'     => $fruit,
+          'portion'   => $portion
+        ]);
+    }
+
+    $row = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}tartinette_likes WHERE id_child = '$id_child' ");
+    if (is_null($row)) {
+        $wpdb->insert("{$wpdb->prefix}tartinette_likes", [
+          'id_child'        => $id_child,
+          'classique'       => $classique,
+          'dago'            => $dago,
+          'fromage'         => $fromage,
+          'autre_fromage'   => $autre_fromage,
+          'italien'         => $italien,
+          'halal'           => $halal
+        ]);
+    }
+
+    $row = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}tartinette_dislikes WHERE id_child = '$id_child' ");
+    if (is_null($row)) {
+        $wpdb->insert("{$wpdb->prefix}tartinette_dislikes", [
+          'id_child'        => $id_child,
+          'beurre'          => $beurre,
+          'salade'          => $salade,
+          'legume_grille'   => $legume_grille,
+          'legumaise'       => $legumaise,
+          'pesto'           => $pesto,
+        ]);
+    }
+
+  }
+
+  public function get_children(){
     global $wpdb;
     $tribu = $_SESSION['user_data']->tribu;
     $children = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}tartinette_children WHERE tribu = '$tribu' ");
@@ -132,6 +192,17 @@ class MyOO_Users_Organizer
     }
     return $children_html;
   }
+
+  public function temp_order(){
+    $lundi    = (isset($_POST['lundi']))    ? true : false;
+    $mardi    = (isset($_POST['mardi']))    ? true : false;
+    $mercredi = (isset($_POST['mercredi'])) ? true : false;
+    $jeudi    = (isset($_POST['jeudi']))    ? true : false;
+    $vendredi = (isset($_POST['vendredi'])) ? true : false;
+
+    $_SESSION['temp_order'] = [$lundi,$mardi,$mercredi,$jeudi,$vendredi];
+  }
+
 
 /* ---------------- HTML --------------- */
 
@@ -182,11 +253,9 @@ class MyOO_Users_Organizer
   }
 
   public function my_account_html(){
-    // <div><input style='float:left' type='button' name='child1' onclick='just_show(my_forms)' value='Jessie'/></div><br/>
-    // <div><input type='button' name='child2' onclick='just_show(my_forms)' value='James'/></div><br/>
     return "<div>
               <h2 >Tribu ".$_SESSION['user_data']->tribu."</h2>".
-              $this->hello()
+              $this->get_children()
               ."<form method='post' action=''>
                 <div id='children'>
                 </div>
@@ -203,34 +272,39 @@ class MyOO_Users_Organizer
               </div><br/>
               <div>
                 <h3>Like</h3>
-                <input type='checkbox' name='fromage' value='Fromage' />Fromage
-                <input type='checkbox' name='italien' value='Italien' />Italien
-                <input type='checkbox' name='halal' value='Halal' />Halal
+                <input type='checkbox' name='classique' />Classique
+                <input type='checkbox' name='dago' />Dago
+                <input type='checkbox' name='fromage' />Fromage
+                <input type='checkbox' name='autre_fromage' />L'Autre fromage
+                <input type='checkbox' name='italien' />Italien
+                <input type='checkbox' name='halal' />Halal
               </div>
               <div>
                 <h3>Dislike</h3>
-                <input type='checkbox' name='beurre' value='Beurre' />Beurre
-                <input type='checkbox' name='salade' value='Salade' />Salade
-                <input type='checkbox' name='legumaise' value='Légumaise' />Légumaise
+                <input type='checkbox' name='beurre' />Beurre
+                <input type='checkbox' name='salade' />Salade
+                <input type='checkbox' name='legume_grille' />Légume grillé
+                <input type='checkbox' name='legumaise' />Légumaise
+                <input type='checkbox' name='pesto' />Pesto
               </div>
               <div>
                 <h3>Fruit</h3>
-                <input type='radio' name='fruit' value='Oui' />Oui
-                <input type='radio' name='fruit' value='Non' />Non
+                <input type='radio' name='fruit' value='oui' />Oui
+                <input type='radio' name='fruit' value='non' />Non
               </div>
               <div>
                 <h3>Appétit</h3>
-                <input type='radio' name='portion' value='Benjamin' />Benjamin <i>(2 tartines ou 1/4 de baguette)</i>
-                <input type='radio' name='portion' value='Cadette' />Cadette <i>(4 tartines ou 1/3 de baguette)</i>
-                <input type='radio' name='portion' value='Ainé' />Ainé <i>(6 tartines ou 1/2 de baguette)</i>
+                <input type='radio' name='portion' value='S' />Benjamin <i>(2 tartines ou 1/4 de baguette)</i>
+                <input type='radio' name='portion' value='M' />Cadette <i>(4 tartines ou 1/3 de baguette)</i>
+                <input type='radio' name='portion' value='L' />Ainé <i>(6 tartines ou 1/2 de baguette)</i>
               </div>
               <div>
                 <h3>Commander pour :</h3>
-                <input type='checkbox' name='lun' value='lun' />Lun
-                <input type='checkbox' name='mar' value='mar' />Mar
-                <input type='checkbox' name='mer' value='mer' />Mer
-                <input type='checkbox' name='jeu' value='jeu' />Jeu
-                <input type='checkbox' name='ven' value='ven' />Ven
+                <input type='checkbox' name='lundi' />Lun
+                <input type='checkbox' name='mardi' />Mar
+                <input type='checkbox' name='mercredi' />Mer
+                <input type='checkbox' name='jeudi' />Jeu
+                <input type='checkbox' name='vendredi' />Ven
               </div>
               <input type='submit' name='save_choices' value='Ok'/>
             </form>

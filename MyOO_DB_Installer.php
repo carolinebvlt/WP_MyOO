@@ -28,11 +28,30 @@ class MyOO_DB_Installer
       $sql_tartinette_preferences =
         "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}tartinette_preferences (
                 `id_child` INT NOT NULL ,
-                `likes` TEXT NOT NULL ,
-                `dislikes` TEXT NOT NULL ,
                 `fruit` BOOLEAN NOT NULL ,
                 `portion` ENUM('S','M','L') NOT NULL )
                 ENGINE = InnoDB CHARSET=utf8 COLLATE utf8_general_ci;";
+
+      $sql_tartinette_likes =
+        "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}tartinette_likes (
+                `id_child` INT NOT NULL ,
+                `classique` BOOLEAN NOT NULL ,
+                `dago` BOOLEAN NOT NULL ,
+                `fromage` BOOLEAN NOT NULL ,
+                `autre_fromage` BOOLEAN NOT NULL ,
+                `italien` BOOLEAN NOT NULL ,
+                `halal` BOOLEAN NOT NULL )
+                ENGINE = InnoDB;";
+
+      $sql_tartinette_dislikes =
+        "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}tartinette_dislikes (
+                `id_child` INT NOT NULL ,
+                `beurre` BOOLEAN NOT NULL ,
+                `salade` BOOLEAN NOT NULL ,
+                `legume_grille` BOOLEAN NOT NULL ,
+                `legumaise` BOOLEAN NOT NULL ,
+                `pesto` BOOLEAN NOT NULL )
+                ENGINE = InnoDB;";
 
       $sql_tartinette_already_had =
         "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}tartinette_already_had (
@@ -46,12 +65,18 @@ class MyOO_DB_Installer
                 `id` INT NOT NULL AUTO_INCREMENT ,
                 `id_child` INT NOT NULL ,
                 `week_nbr` TINYINT NOT NULL ,
-                `days` SMALLINT NOT NULL ,
+                `lundi` BOOLEAN NOT NULL ,
+                `mardi` BOOLEAN NOT NULL ,
+                `mercredi` BOOLEAN NOT NULL ,
+                `jeudi` BOOLEAN NOT NULL ,
+                `vendredi` BOOLEAN NOT NULL ,
                 PRIMARY KEY (`id`)) ENGINE = InnoDB;";
 
       $wpdb->query($sql_tartinette_users);
       $wpdb->query($sql_tartinette_children);
       $wpdb->query($sql_tartinette_preferences);
+      $wpdb->query($sql_tartinette_likes);
+      $wpdb->query($sql_tartinette_dislikes);
       $wpdb->query($sql_tartinette_already_had);
       $wpdb->query($sql_tartinette_orders);
     }
