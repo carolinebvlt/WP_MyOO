@@ -3,7 +3,10 @@ session_start();
 
 class MyOO_Users_Organizer
 {
+  private $users_manager;
   public function __construct(){
+    include_once plugin_dir_path( __FILE__ ).'/MyOO_Users_Manager.php';
+    $this->users_manager = new MyOO_Users_Manager();
     add_action('init', [$this, 'add_account_page']);
     add_action('admin_menu', [$this, 'add_admin_menu_users'], 20);
     add_action('wp_loaded', [$this, 'which_action']);
@@ -65,26 +68,16 @@ class MyOO_Users_Organizer
             $_POST['password'] === $_POST['password_check'])              &&
           (isset($_POST['tribu'])       && !empty($_POST['tribu']))
         ){
-      global $wpdb;
-      $row = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}tartinette_users WHERE email = '$email'");
-      if (is_null($row)) {
-          $wpdb->insert("{$wpdb->prefix}tartinette_users", [
-            'last_name'   => $_POST['last_name'],
-            'first_name'  => $_POST['first_name'],
-            'phone'       => $_POST['phone'],
-            'email'       => $_POST['email'],
-            'pass_h'      => sha1($_POST['password']),
-            'tribu'       => $_POST['tribu']
-          ]);
-      }
+          $this->users_manager->add_user();
     }
   }
 
   public function connexion(){
     $email = $_POST['email'];
     $password = $_POST['password'];
-    global $wpdb;
-    $data = $wpdb->get_row( "SELECT * FROM {$wpdb->prefix}tartinette_users WHERE email = '$email' ");
+
+    $data = $this->users_manager->get_user($email);
+
     if($data->pass_h === sha1($password)){
       $_SESSION['connected'] = true;
       $_SESSION['user_data'] = $data;
@@ -109,83 +102,16 @@ class MyOO_Users_Organizer
           (isset($_POST['school'])      && !empty($_POST['school']))      &&
           (isset($_POST['classroom'])   && !empty($_POST['classroom']))
         ){
-          global $wpdb;
-          $last_name = $_POST['last_name'];
-          $first_name = $_POST['first_name'];
-          $row = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}tartinette_children WHERE last_name = '$last_name' AND first_name = '$first_name'");
-          if (is_null($row)) {
-              $wpdb->insert("{$wpdb->prefix}tartinette_children", [
-                'last_name'   => $_POST['last_name'],
-                'first_name'  => $_POST['first_name'],
-                'school'      => $_POST['school'],
-                'classroom'   => $_POST['classroom'],
-                'tribu'       => $_SESSION['user_data']->tribu
-              ]);
-          }
-        }
+          $this->users_manager->add_child();
+    }
   }
 
   public function save_preferences(){
-    global $wpdb;
-    $id_child       = $wpdb->insert_id;
-
-    $classique      = (isset($_POST['classique']))      ? true : false;
-    $dago           = (isset($_POST['dago']))           ? true : false;
-    $fromage        = (isset($_POST['fromage']))        ? true : false;
-    $autre_fromage  = (isset($_POST['autre_fromage']))  ? true : false;
-    $italien        = (isset($_POST['italien']))        ? true : false;
-    $halal          = (isset($_POST['halal']))          ? true : false;
-
-    $beurre         = (isset($_POST['beurre']))         ? true : false;
-    $salade         = (isset($_POST['salade']))         ? true : false;
-    $legume_grille  = (isset($_POST['legume_grille']))  ? true : false;
-    $legumaise      = (isset($_POST['legumaise']))      ? true : false;
-    $pesto          = (isset($_POST['pesto']))          ? true : false;
-
-    $fruit          = ($_POST['fruit'] === 'oui')       ? true : false;
-
-    $portion = $_POST['portion'];
-
-    $row = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}tartinette_preferences WHERE id_child = '$id_child' ");
-    if (is_null($row)) {
-        $wpdb->insert("{$wpdb->prefix}tartinette_preferences", [
-          'id_child'  => $id_child,
-          'fruit'     => $fruit,
-          'portion'   => $portion
-        ]);
-    }
-
-    $row = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}tartinette_likes WHERE id_child = '$id_child' ");
-    if (is_null($row)) {
-        $wpdb->insert("{$wpdb->prefix}tartinette_likes", [
-          'id_child'        => $id_child,
-          'classique'       => $classique,
-          'dago'            => $dago,
-          'fromage'         => $fromage,
-          'autre_fromage'   => $autre_fromage,
-          'italien'         => $italien,
-          'halal'           => $halal
-        ]);
-    }
-
-    $row = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}tartinette_dislikes WHERE id_child = '$id_child' ");
-    if (is_null($row)) {
-        $wpdb->insert("{$wpdb->prefix}tartinette_dislikes", [
-          'id_child'        => $id_child,
-          'beurre'          => $beurre,
-          'salade'          => $salade,
-          'legume_grille'   => $legume_grille,
-          'legumaise'       => $legumaise,
-          'pesto'           => $pesto,
-        ]);
-    }
-
+    $this->users_manager->add_preferences();
   }
 
   public function get_children(){
-    global $wpdb;
-    $tribu = $_SESSION['user_data']->tribu;
-    $children = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}tartinette_children WHERE tribu = '$tribu' ");
+    $children = $this->users_manager->get_children();
     $children_html;
     foreach ($children as $child) {
       $children_html = $children_html."<input style='whidth:100px; height:50px;' type='button' name='".$child->first_name."' onclick='just_show(my_forms)' value='".$child->first_name."'/>";
@@ -207,8 +133,7 @@ class MyOO_Users_Organizer
 /* ---------------- HTML --------------- */
 
   public function my_users_render(){
-    global $wpdb;
-    $data = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}tartinette_users");
+    $data = $users_manager->get_users();
     echo '<div class="wrap theme-options-page"><h1>'.get_admin_page_title().'</h1></div><br/>';
     echo "<table>";
     echo "<tr>
