@@ -119,14 +119,21 @@ class MyOO_Users_Organizer
     return $children_html;
   }
 
-  public function temp_order(){
-    $lundi    = (isset($_POST['lundi']))    ? true : false;
-    $mardi    = (isset($_POST['mardi']))    ? true : false;
-    $mercredi = (isset($_POST['mercredi'])) ? true : false;
-    $jeudi    = (isset($_POST['jeudi']))    ? true : false;
-    $vendredi = (isset($_POST['vendredi'])) ? true : false;
-
-    $_SESSION['temp_order'] = [$lundi,$mardi,$mercredi,$jeudi,$vendredi];
+  public function get_days_forms(){
+    $children = $this->users_manager->get_children();
+    $days_forms;
+    foreach ($children as $child) {
+      $days_forms = $days_forms.
+                    "<tr>
+                        <th>".$child->first_name."</th>
+                        <td><input type='checkbox' name='lundi' /></td>
+                        <td><input type='checkbox' name='mardi' /></td>
+                        <td><input type='checkbox' name='mercredi' /></td>
+                        <td><input type='checkbox' name='jeudi' /></td>
+                        <td><input type='checkbox' name='vendredi' /></td>
+                      </tr>";
+    }
+    return $days_forms;
   }
 
 
@@ -223,27 +230,32 @@ class MyOO_Users_Organizer
                 <input type='radio' name='portion' value='M' />Cadette <i>(4 tartines ou 1/3 de baguette)</i>
                 <input type='radio' name='portion' value='L' />Ainé <i>(6 tartines ou 1/2 de baguette)</i>
               </div>
-              <div>
-                <h3>Commander pour :</h3>
-                <input type='checkbox' name='lundi' />Lun
-                <input type='checkbox' name='mardi' />Mar
-                <input type='checkbox' name='mercredi' />Mer
-                <input type='checkbox' name='jeudi' />Jeu
-                <input type='checkbox' name='vendredi' />Ven
-              </div>
               <input type='submit' name='save_choices' value='Ok'/>
             </form>
             </div>
-            <h1>Ma commande </h1>
-            <div>
-              <div id='resume_commande'>
-              </div><br/>
-              <div id='prix_total' class='wrap'>
-                <strong>Total : </strong>  €
-              </div><br/>
-              <div>
-                <input type='submit' name='commander' value='Commander' />
-              </div>
+            <div id='commande'>
+              <h1>Ma commande </h1>
+              <form method='post' action=''>
+                <div>
+                  <table>
+                    <tr>
+                      <th></th>
+                      <th>Lun</th>
+                      <th>Mar</th>
+                      <th>Mer</th>
+                      <th>Jeu</th>
+                      <th>Ven</th>
+                    </tr>".
+                      $this->get_days_forms()."
+                  </table>
+                </div>
+                <div id='prix_total' class='wrap'>
+                  <strong>Total : </strong> 0 €
+                </div><br/>
+                <div>
+                  <input type='submit' name='commander' value='Commander' />
+                </div>
+              </form>
             </div>";
   }
 
