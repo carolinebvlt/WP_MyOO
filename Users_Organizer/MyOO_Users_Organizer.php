@@ -47,12 +47,13 @@ class MyOO_Users_Organizer
     elseif(isset($_POST['submit_connexion'])){
       $this->connexion();
     }
-    elseif (isset($_POST['save_choices'])){
-      $this->save_child();
-      $this->save_preferences();
-    }
     elseif (isset($_POST['add_child'])) {
       $this->update_content_add_child();
+    }
+    elseif (isset($_POST['save_choices'])){
+      $id = $this->save_child();
+      $this->users_manager->add_preferences($id);
+      $this->update_content_child_added();
     }
     elseif (isset($_POST['show_pref'])) {
       $this->update_content_show_pref();
@@ -108,14 +109,11 @@ class MyOO_Users_Organizer
           (isset($_POST['school'])      && !empty($_POST['school']))      &&
           (isset($_POST['classroom'])   && !empty($_POST['classroom']))
         ){
-          $this->users_manager->add_child();
-          $this->update_content_child_added();
+          $id = $this->users_manager->add_child();
+          return $id;
     }
   }
 
-  public function save_preferences(){
-    $this->users_manager->add_preferences();
-  }
 
   public function get_children_buttons(){
     $children = $this->users_manager->get_children();
@@ -153,7 +151,7 @@ class MyOO_Users_Organizer
     $sql = "SELECT * FROM {$wpdb->prefix}posts WHERE post_title = 'Mon compte' AND post_status = 'publish' AND post_type = 'page' ";
     $row = $wpdb->get_row($sql);
     $id_page = $row->ID;
-    $html = $this->div_tribu_html().$this->div_pref_form_html($no_child).$this->div_commande_html();
+    $html = $this->div_tribu_html().$this->div_pref_form_html($no_child, $no_child).$this->div_commande_html();
     wp_update_post([
       'ID' => $id_page,
       'post_content' => $html
@@ -175,12 +173,13 @@ class MyOO_Users_Organizer
   public function update_content_show_pref(){
     $id = $_POST['id_child'];
     $child_data = $this->users_manager->get_child($id);
+    $likes_data = $this->users_manager->get_likes($id);
 
     global $wpdb;
     $sql = "SELECT * FROM {$wpdb->prefix}posts WHERE post_title = 'Mon compte' AND post_status = 'publish' AND post_type = 'page' ";
     $row = $wpdb->get_row($sql);
     $id_page = $row->ID;
-    $html = $this->div_tribu_html().$this->div_pref_form_html($child_data).$this->div_commande_html();
+    $html = $this->div_tribu_html().$this->div_pref_form_html($child_data, $likes_data).$this->div_commande_html();
     wp_update_post([
       'ID' => $id_page,
       'post_content' => $html
@@ -246,7 +245,7 @@ class MyOO_Users_Organizer
             </div>";
   }
 
-  public function div_pref_form_html($child_data){
+  public function div_pref_form_html($child_data, $likes_data){
     return "<form action='' method='post'>
               <div>
                 <input type='text' name='last_name' value='".$child_data->last_name."' placeholder='Nom' />
@@ -256,12 +255,12 @@ class MyOO_Users_Organizer
               </div><br/>
               <div>
                 <h3>Like</h3>
-                <input type='checkbox' name='classique' />Classique
-                <input type='checkbox' name='dago' />Dago
-                <input type='checkbox' name='fromage' />Fromage
-                <input type='checkbox' name='autre_fromage' />L'Autre fromage
-                <input type='checkbox' name='italien' />Italien
-                <input type='checkbox' name='halal' />Halal
+                <input type='checkbox' name='classique' ".checked($likes_data->classique, '1', false)." />Classique
+                <input type='checkbox' name='dago' ".checked($likes_data->dago, '1', false)."  />Dago
+                <input type='checkbox' name='fromage' ".checked($likes_data->fromage, '1', false)."  />Fromage
+                <input type='checkbox' name='autre_fromage' ".checked($likes_data->autre_fromage, '1', false)."  />L'Autre fromage
+                <input type='checkbox' name='italien' ".checked($likes_data->italien, '1', false)."  />Italien
+                <input type='checkbox' name='halal' ".checked($likes_data->halal, '1', false)."  />Halal
               </div>
               <div>
                 <h3>Dislike</h3>
