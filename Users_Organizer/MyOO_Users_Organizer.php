@@ -4,6 +4,7 @@ session_start();
 class MyOO_Users_Organizer
 {
   private $users_manager;
+
   public function __construct(){
     include_once plugin_dir_path( __FILE__ ).'/MyOO_Users_Manager.php';
     $this->users_manager = new MyOO_Users_Manager();
@@ -49,7 +50,9 @@ class MyOO_Users_Organizer
     elseif (isset($_POST['save_choices'])){
       $this->save_child();
       $this->save_preferences();
-      $this->temp_order();
+    }
+    elseif (isset($_POST['add_child'])) {
+      $this->update_content_add_child();
     }
   }
 
@@ -87,7 +90,7 @@ class MyOO_Users_Organizer
       $sql = "SELECT * FROM {$wpdb->prefix}posts WHERE post_title = 'Mon compte' AND post_status = 'publish' AND post_type = 'page' ";
       $row = $wpdb->get_row($sql);
       $id_page = $row->ID;
-      $html = $this->my_account_html();
+      $html = $this->div_tribu_html().$this->div_commande_html();
       wp_update_post([
         'ID' => $id_page,
         'post_content' => $html
@@ -103,6 +106,7 @@ class MyOO_Users_Organizer
           (isset($_POST['classroom'])   && !empty($_POST['classroom']))
         ){
           $this->users_manager->add_child();
+          $this->update_content_child_added();
     }
   }
 
@@ -110,16 +114,16 @@ class MyOO_Users_Organizer
     $this->users_manager->add_preferences();
   }
 
-  public function get_children(){
+  public function get_children_buttons(){
     $children = $this->users_manager->get_children();
     $children_html;
     foreach ($children as $child) {
-      $children_html = $children_html."<input style='whidth:100px; height:50px;' type='button' name='".$child->first_name."' onclick='just_show(my_forms)' value='".$child->first_name."'/>";
+      $children_html = $children_html."<input style='whidth:100px; height:50px;' type='submit' name='".$child->first_name."' onclick='just_show(my_forms)' value='".$child->first_name."'/>";
     }
     return $children_html;
   }
 
-  public function get_days_forms(){
+  public function get_days_form(){
     $children = $this->users_manager->get_children();
     $days_forms;
     foreach ($children as $child) {
@@ -134,6 +138,30 @@ class MyOO_Users_Organizer
                       </tr>";
     }
     return $days_forms;
+  }
+
+  public function update_content_add_child(){
+    global $wpdb;
+    $sql = "SELECT * FROM {$wpdb->prefix}posts WHERE post_title = 'Mon compte' AND post_status = 'publish' AND post_type = 'page' ";
+    $row = $wpdb->get_row($sql);
+    $id_page = $row->ID;
+    $html = $this->div_tribu_html().$this->div_pref_form_html().$this->div_commande_html();
+    wp_update_post([
+      'ID' => $id_page,
+      'post_content' => $html
+    ]);
+  }
+
+  public function update_content_child_added(){
+    global $wpdb;
+    $sql = "SELECT * FROM {$wpdb->prefix}posts WHERE post_title = 'Mon compte' AND post_status = 'publish' AND post_type = 'page' ";
+    $row = $wpdb->get_row($sql);
+    $id_page = $row->ID;
+    $html = $this->div_tribu_html().$this->div_commande_html();
+    wp_update_post([
+      'ID' => $id_page,
+      'post_content' => $html
+    ]);
   }
 
 
@@ -184,18 +212,20 @@ class MyOO_Users_Organizer
             </div>';
   }
 
-  public function my_account_html(){
+  public function div_tribu_html(){
     return "<div>
-              <h2 >Tribu ".$_SESSION['user_data']->tribu."</h2>".
-              $this->get_children()
-              ."<form method='post' action=''>
-                <div id='children'>
-                </div>
-                <div><input onclick='just_show(my_forms)' type='button' name='add_child' value='Ajouter un enfant'/></div>
+              <h2 >Tribu ".$_SESSION['user_data']->tribu."</h2>
+              <form id='children' method='post' action=''>".
+                $this->get_children_buttons()."
+                <div><input type='submit' name='add_child' value='Ajouter un enfant'/></div>
               </form>
             </div>
-            <div style='display:none' id='my_forms'>
-            <form action='' method='post'>
+            <div id='preferences_form'>
+            </div>";
+  }
+
+  public function div_pref_form_html(){
+    return "<form action='' method='post'>
               <div>
                 <input type='text' name='last_name' placeholder='Nom' />
                 <input type='text' name='first_name' placeholder='Prénom' />
@@ -231,9 +261,11 @@ class MyOO_Users_Organizer
                 <input type='radio' name='portion' value='L' />Ainé <i>(6 tartines ou 1/2 de baguette)</i>
               </div>
               <input type='submit' name='save_choices' value='Ok'/>
-            </form>
-            </div>
-            <div id='commande'>
+            </form>";
+  }
+
+  public function div_commande_html(){
+    return "<div id='commande'>
               <h1>Ma commande </h1>
               <form method='post' action=''>
                 <div>
@@ -246,7 +278,7 @@ class MyOO_Users_Organizer
                       <th>Jeu</th>
                       <th>Ven</th>
                     </tr>".
-                      $this->get_days_forms()."
+                      $this->get_days_form()."
                   </table>
                 </div>
                 <div id='prix_total' class='wrap'>
@@ -258,5 +290,6 @@ class MyOO_Users_Organizer
               </form>
             </div>";
   }
+
 
 } // end class
