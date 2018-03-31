@@ -50,6 +50,12 @@ class MyOO_Users_Manager
     return $children;
   }
 
+  public function get_child($id){
+    global $wpdb;
+    $child = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}tartinette_children WHERE id = '$id' ");
+    return $child;
+  }
+
   public function add_preferences(){
     global $wpdb;
     $id_child = $wpdb->insert_id;
