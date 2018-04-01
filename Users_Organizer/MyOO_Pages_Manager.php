@@ -83,7 +83,7 @@ class MyOO_Pages_Manager
               <div id='children_buttons'>
               </div>
               <div style='height:3vh;clear:both;'></div>
-              <div style='clear:both'><input type='button' onclick='show(data_child_form)' value='Ajouter un enfant' /></div>
+              <div style='clear:both'><input type='button' onclick='get_my_form(0)' value='Ajouter un enfant' /></div>
             </div>
             <form id='data_child_form' action='' method='post' style='display:none'>
               <div>
