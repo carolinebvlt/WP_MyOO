@@ -44,7 +44,7 @@ class MyOO_Users_Manager
     }
   }
 
-  public function get_children(){
+  public function get_children($tribu){
     global $wpdb;
     $tribu = $_SESSION['user_data']->tribu;
     $children = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}tartinette_children WHERE tribu = '$tribu' ");
@@ -63,7 +63,19 @@ class MyOO_Users_Manager
     return $likes;
   }
 
-  public function add_preferences($id){
+  public function get_dislikes($id){
+    global $wpdb;
+    $likes = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}tartinette_dislikes WHERE id_child = '$id' ");
+    return $likes;
+  }
+
+  public function get_pref($id){
+    global $wpdb;
+    $pref = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}tartinette_preferences WHERE id_child = '$id' ");
+    return $likes;
+  }
+
+  public function save_preferences($id){
     global $wpdb;
     $id_child = $id;
 
