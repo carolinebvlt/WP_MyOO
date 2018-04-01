@@ -16,12 +16,11 @@ class MyOO_Users_Organizer
     add_action('init', [$this->pages_manager, 'add_connexion_page']);
     add_action('init', [$this->pages_manager, 'add_account_page']);
     add_action('wp_loaded', [$this, 'routeur']);
-    add_action('wp_loaded', [$this, 'which_action']);
     add_action('wp', [$this, 'enqueue_tribu_datascript']);
   }
 
   public function add_admin_menu_users(){
-    add_menu_page('My Users', 'My Users', 'manage_options', 'myoo_users', [$this, 'my_users_render'], 'dashicons-groups', 27 );
+    add_menu_page('My Users', 'My Users', 'manage_options', 'myoo_users', [$this, 'admin_users_html'], 'dashicons-groups', 27 );
   }
 
   public function routeur(){
@@ -43,8 +42,6 @@ class MyOO_Users_Organizer
       if($data->pass_h === sha1($password)){
         $_SESSION['connected'] = true;
         $_SESSION['user_data'] = $data;
-        $data_children = $this->get_all_data();
-        $_SESSION['data_children'] = $data_children;
         wp_redirect('http://localhost/php/wordpress/index.php/mon-compte/');
         exit;
       }
@@ -62,14 +59,13 @@ class MyOO_Users_Organizer
         exit;
       }
     }
-  }
 
-  public function which_action(){
-    if (isset($_POST['save_choices'])){
+    elseif (isset($_POST['save_choices'])){
       $id = $this->save_child();
       $this->users_manager->save_preferences($id);
+      wp_redirect('http://localhost/php/wordpress/index.php/mon-compte/');
+      exit;
     }
-
   }
 
   public function enqueue_tribu_datascript(){
@@ -103,7 +99,7 @@ class MyOO_Users_Organizer
     return $children;
   }
 
-  public function save_new_user(){ /*AC*/ //converted
+  public function save_new_user(){ /*AC*/
     if (
           (isset($_POST['last_name'])   && !empty($_POST['last_name']))   &&
           (isset($_POST['first_name'])  && !empty($_POST['first_name']))  &&
@@ -135,41 +131,10 @@ class MyOO_Users_Organizer
   }
 
 
-  public function get_children_buttons(){
-    $children = $this->users_manager->get_children();
-    $children_html;
-    foreach ($children as $child) {
-      $children_html = $children_html."
-        <form method='post' action=''>
-          <input type='hidden' name='id_child' value='".$child->id."' />
-          <input style='whidth:100px; height:50px;' type='submit' name='show_pref' value='".$child->first_name."'/>
-        </form>";
-    }
-    return $children_html;
-  }
-
-  public function get_days_form(){
-    $children = $this->users_manager->get_children();
-    $days_forms;
-    foreach ($children as $child) {
-      $days_forms = $days_forms.
-                    "<tr>
-                        <th>".$child->first_name."</th>
-                        <td><input type='checkbox' name='lundi' /></td>
-                        <td><input type='checkbox' name='mardi' /></td>
-                        <td><input type='checkbox' name='mercredi' /></td>
-                        <td><input type='checkbox' name='jeudi' /></td>
-                        <td><input type='checkbox' name='vendredi' /></td>
-                      </tr>";
-    }
-    return $days_forms;
-  }
-
-
 
 /* ---------------- HTML --------------- */
 
-  public function my_users_render(){ // dont touch
+  public function admin_users_html(){ // dont touch
     $data = $users_manager->get_users();
     echo '<div class="wrap theme-options-page"><h1>'.get_admin_page_title().'</h1></div><br/>';
     echo "<table>";
