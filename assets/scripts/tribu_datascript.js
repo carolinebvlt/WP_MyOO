@@ -32,11 +32,38 @@ function get_my_form(childId)
   document.getElementById('school').value = child[0].school;
   document.getElementById('classroom').value = child[0].classroom;
 
+  for(pref in child[1]){
+    if(typeof document.getElementsByName(pref)[0] !== 'undefined'){
+      if(pref === "fruit"){
+        if(child[1][pref] === "1"){
+          document.getElementsByName(pref)[0].checked = true;
+        }
+        else{
+          document.getElementsByName(pref)[1].checked = true;
+        }
+      }
+      if(pref === "portion"){
+        document.getElementsByName('portion').forEach(function(e){
+          if(e.value === child[1][pref]){
+            e.checked = true;
+          }
+        });
+      }
+    }
+  }
+
+  for(pref in child[2]){
+    if(typeof document.getElementsByName(pref)[0] !== 'undefined'){
+      if(child[2][pref] === "1"){
+        document.getElementsByName(pref)[0].checked = true ;
+      }
+    }
+  }
+
   for(pref in child[3]){
-    // console.log(pref + ' = ' + child[3][pref]);
     if(typeof document.getElementsByName(pref)[0] !== 'undefined'){
       if(child[3][pref] === "1"){
-        console.log(document.getElementsByName(pref)[0].checked = true );  
+        document.getElementsByName(pref)[0].checked = true ;
       }
     }
   }
