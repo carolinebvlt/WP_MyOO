@@ -75,7 +75,7 @@ class MyOO_Users_Manager
     return $likes;
   }
 
-  public function add_preferences($id){
+  public function save_preferences($id){
     global $wpdb;
     $id_child = $id;
 

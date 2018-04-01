@@ -17,6 +17,7 @@ class MyOO_Users_Organizer
     add_action('init', [$this->pages_manager, 'add_account_page']);
     add_action('wp_loaded', [$this, 'routeur']);
     add_action('wp_loaded', [$this, 'which_action']);
+    add_action('wp', [$this, 'enqueue_tribu_datascript']);
   }
 
   public function add_admin_menu_users(){
@@ -64,20 +65,26 @@ class MyOO_Users_Organizer
   }
 
   public function which_action(){
-    if (isset($_POST['add_child'])) {
-      $this->update_content_add_child();
-    }
-
-    elseif (isset($_POST['save_choices'])){
+    if (isset($_POST['save_choices'])){
       $id = $this->save_child();
-      $this->users_manager->add_preferences($id);
-      $this->update_content_child_added();
+      $this->users_manager->save_preferences($id);
     }
 
-    elseif (isset($_POST['show_pref'])) {
-      $this->update_content_show_pref();
-    }
+  }
 
+  public function enqueue_tribu_datascript(){
+    if(is_page('Mon compte')){
+      $data_children = $this->get_all_data();
+      $_SESSION['data_children'] = $data_children;
+      if(wp_script_is('tribu_datascript')){
+        wp_localize_script('tribu_datascript', 'dataUser', $_SESSION['data_children']);
+      }
+      else{
+        wp_register_script('tribu_datascript', plugin_dir_url(__FILE__) . '../assets/scripts/tribu_datascript.js');
+        wp_localize_script('tribu_datascript', 'dataUser', $_SESSION['data_children']);
+        wp_enqueue_script('tribu_datascript');
+      }
+    }
   }
 
   private function get_all_data(){

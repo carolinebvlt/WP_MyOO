@@ -78,16 +78,11 @@ class MyOO_Pages_Manager
   }
 
   private function account_html(){
-    wp_register_script('tribu_datascript', plugin_dir_url(__FILE__) . '../assets/scripts/tribu_datascript.js');
-    wp_localize_script('tribu_datascript', 'dataUser', $_SESSION['data_children']);
-    wp_enqueue_script('tribu_datascript');
     return "<div id='tribu'>
               <h2>Tribu ".$_SESSION['user_data']->tribu."</h2>
               <div id='children_buttons'>
               </div>
-              <form id='btn_show_empty_form' method='post' action=''>
-                <input type='submit' name='show_empty_form' value='Ajouter un enfant'/>
-              </form>
+              <input type='button' onclick='show(data_child_form)' value='Ajouter un enfant'/>
             </div>
             <form id='data_child_form' action='' method='post' style='display:none'>
               <div>
