@@ -24,7 +24,7 @@ class MyOO_Users_Organizer
   }
 
   public function routeur(){
-    if(isset($_POST['go_tartinette'])){
+    if (isset($_POST['go_tartinette'])){
       if($_SESSION['connected'] === true){
         wp_redirect('http://localhost/php/wordpress/index.php/mon-compte/');
         exit;
@@ -35,14 +35,15 @@ class MyOO_Users_Organizer
       }
     }
 
-    elseif(isset($_POST['submit_connexion'])){
+    elseif (isset($_POST['submit_connexion'])){
       $email = $_POST['email'];
       $password = $_POST['password'];
       $data = $this->users_manager->get_user($email);
       if($data->pass_h === sha1($password)){
         $_SESSION['connected'] = true;
         $_SESSION['user_data'] = $data;
-        $this->enqueue_my_datascript($data);
+        $data_children = $this->get_all_data();
+        $_SESSION['data_children'] = $data_children;
         wp_redirect('http://localhost/php/wordpress/index.php/mon-compte/');
         exit;
       }
@@ -53,7 +54,7 @@ class MyOO_Users_Organizer
       exit;
     }
 
-    elseif(isset($_POST['submit_registration'])){
+    elseif (isset($_POST['submit_registration'])){
       $done = $this->save_new_user();
       if($done === true){
         wp_redirect('http://localhost/php/wordpress/index.php/connexion/');
@@ -79,15 +80,20 @@ class MyOO_Users_Organizer
 
   }
 
-  private function enqueue_my_datascript($data){
-    $data_user = $this->get_all_data($data);
-    wp_register_script('my_datascript', plugin_dir_url(__FILE__) . '../assets/scripts/my_datascript.js');
-    wp_localize_script('my_datascript', 'dataUser', $data_user);
-    wp_enqueue_script('my_datascript');
-  }
-
-  private function get_all_data($data){
-    
+  private function get_all_data(){
+    $tribu_name = $_SESSION['user_data']->tribu;
+    $children_objects = $this->users_manager->get_children($tribu_name);
+    $children = [];
+    foreach ($children_objects as $one_child) {
+      $child = [];
+      $child [] = $one_child;
+      $id = $one_child->id;
+      $child [] = $this->users_manager->get_pref($id);
+      $child [] = $this->users_manager->get_likes($id);
+      $child [] = $this->users_manager->get_dislikes($id);
+      $children [] = $child;
+    }
+    return $children;
   }
 
   public function save_new_user(){ /*AC*/ //converted
