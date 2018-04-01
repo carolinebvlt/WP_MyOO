@@ -82,23 +82,24 @@ class MyOO_Pages_Manager
               <h2>Tribu ".$_SESSION['user_data']->tribu."</h2>
               <div id='children_buttons'>
               </div>
-              <input type='button' onclick='show(data_child_form)' value='Ajouter un enfant'/>
+              <div style='height:3vh;clear:both;'></div>
+              <div style='clear:both'><input type='button' onclick='show(data_child_form)' value='Ajouter un enfant' /></div>
             </div>
             <form id='data_child_form' action='' method='post' style='display:none'>
               <div>
-                <input type='text' name='last_name' value='".$child_data->last_name."' placeholder='Nom' />
-                <input type='text' name='first_name' value='".$child_data->first_name."' placeholder='Prénom' />
-                <input type='text' name='school' value='".$child_data->school."' placeholder='Ecole'/>
-                <input type='text' name='classroom' value='".$child_data->classroom."' placeholder='Classe'>
-              </div><br/>
+                <input id='last_name' type='text' name='last_name' value='' placeholder='Nom' />
+                <input id='first_name' type='text' name='first_name' value='' placeholder='Prénom' />
+                <input id='school' type='text' name='school' value='' placeholder='Ecole'/>
+                <input id='classroom' type='text' name='classroom' value='' placeholder='Classe'>
+              </div>
               <div>
                 <h3>Like</h3>
-                <input type='checkbox' name='classique' ".checked($likes_data->classique, '1', false)." />Classique
-                <input type='checkbox' name='dago' ".checked($likes_data->dago, '1', false)."  />Dago
-                <input type='checkbox' name='fromage' ".checked($likes_data->fromage, '1', false)."  />Fromage
-                <input type='checkbox' name='autre_fromage' ".checked($likes_data->autre_fromage, '1', false)."  />L'Autre fromage
-                <input type='checkbox' name='italien' ".checked($likes_data->italien, '1', false)."  />Italien
-                <input type='checkbox' name='halal' ".checked($likes_data->halal, '1', false)."  />Halal
+                <input type='checkbox' name='classique' />Classique
+                <input type='checkbox' name='dago' />Dago
+                <input type='checkbox' name='fromage'  />Fromage
+                <input type='checkbox' name='autre_fromage' />L'Autre fromage
+                <input type='checkbox' name='italien'  />Italien
+                <input type='checkbox' name='halal'  />Halal
               </div>
               <div>
                 <h3>Dislike</h3>
@@ -136,7 +137,7 @@ class MyOO_Pages_Manager
                   <div id='days_form'>
                   </div>
                 </table>
-                <div id='prix_total' class='wrap'>
+                <div id='prix_total'>
                     <strong>Total : </strong> <span id='total'>0</span> €
                 </div><br/>
                 <div>
