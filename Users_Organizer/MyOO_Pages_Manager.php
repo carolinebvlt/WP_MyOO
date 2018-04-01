@@ -94,12 +94,12 @@ class MyOO_Pages_Manager
               </div>
               <div>
                 <h3>Like</h3>
-                <input type='checkbox' name='classique' ".checked($likes_data->classique, '1', false)." />Classique
-                <input type='checkbox' name='dago' ".checked($likes_data->dago, '1', false)."  />Dago
-                <input type='checkbox' name='fromage' ".checked($likes_data->fromage, '1', false)."  />Fromage
-                <input type='checkbox' name='autre_fromage' ".checked($likes_data->autre_fromage, '1', false)."  />L'Autre fromage
-                <input type='checkbox' name='italien' ".checked($likes_data->italien, '1', false)."  />Italien
-                <input type='checkbox' name='halal' ".checked($likes_data->halal, '1', false)."  />Halal
+                <input type='checkbox' name='classique' />Classique
+                <input type='checkbox' name='dago' />Dago
+                <input type='checkbox' name='fromage'  />Fromage
+                <input type='checkbox' name='autre_fromage' />L'Autre fromage
+                <input type='checkbox' name='italien'  />Italien
+                <input type='checkbox' name='halal'  />Halal
               </div>
               <div>
                 <h3>Dislike</h3>

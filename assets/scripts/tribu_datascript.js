@@ -1,5 +1,4 @@
 console.log('Hello !');
-// console.log(dataUser);
 
 
 window.onload = function get_children_buttons(){
@@ -16,14 +15,32 @@ function get_my_form(childId)
   var child;
   dataUser.forEach(function(e){
     if(Number(e[0].id) === childId){
-      child = e[0];
+      child = e;
     }
   });
   show(data_child_form);
-  document.getElementById('last_name').value = child.last_name;
-  document.getElementById('first_name').value = child.first_name;
-  document.getElementById('school').value = child.school;
-  document.getElementById('classroom').value = child.classroom;
+
+  /*
+    child[0] = infos
+    child[1] = pref
+    child[2] = likes
+    child[3] = dislikes
+  */
+
+  document.getElementById('last_name').value = child[0].last_name;
+  document.getElementById('first_name').value = child[0].first_name;
+  document.getElementById('school').value = child[0].school;
+  document.getElementById('classroom').value = child[0].classroom;
+
+  for(pref in child[3]){
+    // console.log(pref + ' = ' + child[3][pref]);
+    if(typeof document.getElementsByName(pref)[0] !== 'undefined'){
+      if(child[3][pref] === "1"){
+        console.log(document.getElementsByName(pref)[0].checked = true );  
+      }
+    }
+  }
+
 }
 
 

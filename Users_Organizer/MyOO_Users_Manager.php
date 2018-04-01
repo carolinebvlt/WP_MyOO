@@ -72,7 +72,7 @@ class MyOO_Users_Manager
   public function get_pref($id){
     global $wpdb;
     $pref = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}tartinette_preferences WHERE id_child = '$id' ");
-    return $likes;
+    return $pref;
   }
 
   public function save_preferences($id){
