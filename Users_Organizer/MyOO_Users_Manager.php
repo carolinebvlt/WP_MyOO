@@ -40,6 +40,7 @@ class MyOO_Users_Manager
           'classroom'   => $_POST['classroom'],
           'tribu'       => $_SESSION['user_data']->tribu
         ]);
+        return $wpdb->insert_id;
     }
   }
 
@@ -50,9 +51,21 @@ class MyOO_Users_Manager
     return $children;
   }
 
-  public function add_preferences(){
+  public function get_child($id){
     global $wpdb;
-    $id_child = $wpdb->insert_id;
+    $child = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}tartinette_children WHERE id = '$id' ");
+    return $child;
+  }
+
+  public function get_likes($id){
+    global $wpdb;
+    $likes = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}tartinette_likes WHERE id_child = '$id' ");
+    return $likes;
+  }
+
+  public function add_preferences($id){
+    global $wpdb;
+    $id_child = $id;
 
     $classique      = (isset($_POST['classique']))      ? true : false;
     $dago           = (isset($_POST['dago']))           ? true : false;
