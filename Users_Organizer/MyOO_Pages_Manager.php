@@ -92,35 +92,41 @@ class MyOO_Pages_Manager
                 <input id='school' type='text' name='school' value='' placeholder='Ecole'/>
                 <input id='classroom' type='text' name='classroom' value='' placeholder='Classe'>
               </div>
-              <div>
-                <h3>Like</h3>
-                <input type='checkbox' name='classique' />Classique
-                <input type='checkbox' name='dago' />Dago
-                <input type='checkbox' name='fromage'  />Fromage
-                <input type='checkbox' name='autre_fromage' />L'Autre fromage
-                <input type='checkbox' name='italien'  />Italien
-                <input type='checkbox' name='halal'  />Halal
-              </div>
-              <div>
-                <h3>Dislike</h3>
-                <input type='checkbox' name='beurre' />Beurre
-                <input type='checkbox' name='salade' />Salade
-                <input type='checkbox' name='legume_grille' />Légume grillé
-                <input type='checkbox' name='legumaise' />Légumaise
-                <input type='checkbox' name='pesto' />Pesto
-              </div>
-              <div>
-                <h3>Fruit</h3>
-                <input type='radio' name='fruit' value='oui' />Oui
-                <input type='radio' name='fruit' value='non' />Non
-              </div>
-              <div>
-                <h3>Appétit</h3>
-                <input type='radio' name='portion' value='S' />Benjamin <i>(2 tartines ou 1/4 de baguette)</i>
-                <input type='radio' name='portion' value='M' />Cadette <i>(4 tartines ou 1/3 de baguette)</i>
-                <input type='radio' name='portion' value='L' />Ainé <i>(6 tartines ou 1/2 de baguette)</i>
-              </div>
-              <input type='submit' name='save_choices' value='Ok'/>
+              <table>
+                <tr>
+                  <td>
+                  <h3>Like</h3>
+                  <input type='checkbox' name='classique' />Classique
+                  <input type='checkbox' name='dago' />Dago
+                  <input type='checkbox' name='fromage'  />Fromage
+                  <input type='checkbox' name='autre_fromage' />L'Autre fromage
+                  <input type='checkbox' name='italien'  />Italien
+                  <input type='checkbox' name='halal'  />Halal
+                  </td>
+                  <td>
+                  <h3>Dislike</h3>
+                  <input type='checkbox' name='beurre' />Beurre
+                  <input type='checkbox' name='salade' />Salade
+                  <input type='checkbox' name='legume_grille' />Légume grillé
+                  <input type='checkbox' name='legumaise' />Légumaise
+                  <input type='checkbox' name='pesto' />Pesto
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                  <h3>Fruit</h3>
+                  <input type='radio' name='fruit' value='oui' />Oui
+                  <input type='radio' name='fruit' value='non' />Non
+                  </td>
+                  <td>
+                  <h3>Appétit</h3>
+                  <input type='radio' name='portion' value='S' />Benjamin <i style='font-size:0.8em'>(2 tartines ou 1/4 de baguette)</i>
+                  <input type='radio' name='portion' value='M' />Cadette <i style='font-size:0.8em'>(4 tartines ou 1/3 de baguette)</i>
+                  <input type='radio' name='portion' value='L' />Ainé <i style='font-size:0.8em'>(6 tartines ou 1/2 de baguette)</i>
+                  </td>
+                </tr>
+              </table>
+              <div><input type='submit' name='save_choices' value='Ok'/></div>
             </form>
             <div id='commande'>
               <h1>Ma commande </h1>
