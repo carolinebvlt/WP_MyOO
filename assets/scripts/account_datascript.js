@@ -1,10 +1,14 @@
-console.log('Hello !');
+console.log('Yoplait !!!!');
+// console.log(dataUser[0]); // enfants
+// console.log(dataUser[1]); // portions dispo
+// console.log(dataUser[2]); // prix
+
 
 
 window.onload = function get_children_buttons(){
   var children_buttons_box = document.getElementById('children_buttons');
   var html ="";
-  dataUser.forEach(function(e){
+  dataUser[0].forEach(function(e){
     html += "<form style='float:left' method='post' action=''><input onclick='get_my_form("+ e[0].id +")' style='whidth:100px; height:50px;' type='button' value='" + e[0].first_name +"'/></form>";
   });
   children_buttons_box.innerHTML = html;
@@ -29,7 +33,7 @@ function get_my_form(childId)
   }
   else{
     var child;
-    dataUser.forEach(function(e){
+    dataUser[0].forEach(function(e){
       if(Number(e[0].id) === childId){
         child = e;
       }

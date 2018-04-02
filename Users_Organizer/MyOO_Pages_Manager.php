@@ -124,7 +124,7 @@ class MyOO_Pages_Manager
             </form>
             <div id='commande'>
               <h1>Ma commande </h1>
-              <form method='post' action=''>
+              <form id='commande_totale_form' method='post' action=''>
                 <table style='display:none'>
                   <tr>
                     <th></th>
