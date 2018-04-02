@@ -14,9 +14,10 @@ window.onload = function get_children_buttons(){
   children_buttons_box.innerHTML = html;
 }
 
-function get_my_form(childId)
-{
+function get_my_form(childId){
   if(childId === 0){
+    show(data_child_form);
+
     document.getElementById('last_name').value = "";
     document.getElementById('first_name').value = "";
     document.getElementById('school').value = "";
@@ -103,14 +104,12 @@ function get_my_form(childId)
 
 }
 
-
 function show_and_hide(show,hide){
   show.style.display = "block";
   hide.style.display = "none";
 }
 
-function show(show)
-{
+function show(show){
   show.style.display = "block";
 }
 

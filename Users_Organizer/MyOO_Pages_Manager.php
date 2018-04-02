@@ -114,7 +114,7 @@ class MyOO_Pages_Manager
                   <td>
                     <input type='checkbox' name='beurre' />Beurre
                     <input type='checkbox' name='salade' />Salade
-                    <input type='checkbox' name='legume_grille' />Légume grillé
+                    <input type='checkbox' name='legume_grille' />Légumes grillés
                     <input type='checkbox' name='legumaise' />Légumaise
                     <input type='checkbox' name='pesto' />Pesto
                   </td>
