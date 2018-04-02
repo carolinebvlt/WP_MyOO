@@ -1,4 +1,4 @@
-console.log('Yoplait !!!!');
+console.log('Yoplaaaaaait !!!!');
 // console.log(dataUser[0]); // enfants
 // console.log(dataUser[1]); // portions dispo
 // console.log(dataUser[2]); // prix
@@ -32,6 +32,20 @@ function get_my_form(childId)
     }
   }
   else{
+    console.log('lol');
+    document.getElementById('last_name').value = "";
+    document.getElementById('first_name').value = "";
+    document.getElementById('school').value = "";
+    document.getElementById('classroom').value = "";
+
+    var node_list = document.getElementsByTagName('input');
+
+    for (var i = 0; i < node_list.length; i++) {
+      var node = node_list[i];
+      if ( (node.getAttribute('type') == 'checkbox') || (node.getAttribute('type') == 'radio') ) {
+        node.checked = false;
+      }
+    }
     var child;
     dataUser[0].forEach(function(e){
       if(Number(e[0].id) === childId){
