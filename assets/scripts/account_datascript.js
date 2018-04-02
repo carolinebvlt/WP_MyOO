@@ -4,11 +4,25 @@ console.log('Yo!!!!');
 // console.log(dataUser[2]); // prix
 // console.log(dataUser[3]); // $_SESSION user_data
 
+var Total;
+
 window.onload = function(){
   insert_tribu_name();
   insert_children_buttons();
   days_form();
 }
+
+window.addEventListener('click', function(e){
+
+  if(e.target.value === 'on'){
+    Total = 0 ;
+    dataUser[0].forEach(function(e){
+      test(e);
+    })
+    console.log(Total);
+    document.getElementById('total').innerHTML = Total;
+  }
+})
 
 function insert_tribu_name(){
   var tribu_name_box = document.getElementById('tribu_name');
@@ -41,18 +55,82 @@ function days_form(){
       var td3 = document.createElement('td');
       var td4 = document.createElement('td');
       var td5 = document.createElement('td');
-      td1.innerHTML = "<input type='checkbox' />";
-      td2.innerHTML = "<input type='checkbox' />";
-      td3.innerHTML = "<input type='checkbox' />";
-      td4.innerHTML = "<input type='checkbox' />";
-      td5.innerHTML = "<input type='checkbox' />";
+      var td6 = document.createElement('td');
+      td1.innerHTML = "<input type='checkbox' class='days' id='"+ e[0].id +"_td1' />";
+      td2.innerHTML = "<input type='checkbox' class='days' id='"+ e[0].id +"_td2'/>";
+      td3.innerHTML = "<input type='checkbox' class='days' id='"+ e[0].id +"_td3'/>";
+      td4.innerHTML = "<input type='checkbox' class='days' id='"+ e[0].id +"_td4'/>";
+      td5.innerHTML = "<input type='checkbox' class='days' id='"+ e[0].id +"_td5'/>";
+      td6.innerHTML = e[1].portion;
       tr.appendChild(td1);
       tr.appendChild(td2);
       tr.appendChild(td3);
       tr.appendChild(td4);
       tr.appendChild(td5);
+      tr.appendChild(td6);
+
     })
   }
+}
+
+
+function test(e){
+  // console.log(dataUser[2].L_1j);
+
+  // console.log(document.getElementById(e[0].id + '_td1'));
+
+  var count = 0;
+  if(document.getElementById(e[0].id + '_td1').checked === true){
+    count += 1;
+  }
+  if(document.getElementById(e[0].id + '_td2').checked === true){
+    count += 1;
+  }
+  if(document.getElementById(e[0].id + '_td3').checked === true){
+    count += 1;
+  }
+  if(document.getElementById(e[0].id + '_td4').checked === true){
+    count += 1;
+  }
+  if(document.getElementById(e[0].id + '_td5').checked === true){
+    count += 1;
+  }
+  // nombre de tartines et portion => prix
+  switch (e[1].portion) {
+    case 'S':
+      switch (count) {
+        case 0: break;
+        case 1 : Total = Total + dataUser[2].S_1j; break;
+        case 2 : Total = Total + dataUser[2].S_2j; break;
+        case 3 : Total = Total + dataUser[2].S_3j; break;
+        case 4 : Total = Total + dataUser[2].S_4j; break;
+        case 5 : Total = Total + dataUser[2].S_5j; break;
+      }
+      break;
+
+    case 'M':
+      switch (count) {
+        case 0: break;
+        case 1 : Total = Total + dataUser[2].M_1j; break;
+        case 2 : Total = Total + dataUser[2].M_2j; break;
+        case 3 : Total = Total + dataUser[2].M_3j; break;
+        case 4 : Total = Total + dataUser[2].M_4j; break;
+        case 5 : Total = Total + dataUser[2].M_5j; break;
+      }
+      break;
+    case 'L':
+      switch (count) {
+        case 0: break;
+        case 1 : Total = Total + dataUser[2].L_1j; break;
+        case 2 : Total = Total + dataUser[2].L_2j; break;
+        case 3 : Total = Total + dataUser[2].L_3j; break;
+        case 4 : Total = Total + dataUser[2].L_4j; break;
+        case 5 : Total = Total + dataUser[2].L_5j; break;
+      }
+      break;
+    default: console.log("OMG pas d'info !");break;
+  }
+
 }
 
 function get_my_form(childId){
@@ -153,22 +231,3 @@ function show_and_hide(show,hide){
 function show(show){
   show.style.display = "block";
 }
-
-
-
-// public function get_days_form(){
-//   $children = $this->users_manager->get_children();
-//   $days_forms;
-//   foreach ($children as $child) {
-//     $days_forms = $days_forms.
-//                   "<tr>
-//                       <th>".$child->first_name."</th>
-//                       <td><input type='checkbox' name='lundi' /></td>
-//                       <td><input type='checkbox' name='mardi' /></td>
-//                       <td><input type='checkbox' name='mercredi' /></td>
-//                       <td><input type='checkbox' name='jeudi' /></td>
-//                       <td><input type='checkbox' name='vendredi' /></td>
-//                     </tr>";
-//   }
-//   return $days_forms;
-// }

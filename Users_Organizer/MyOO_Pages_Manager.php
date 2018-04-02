@@ -156,7 +156,7 @@ class MyOO_Pages_Manager
                   </tr>
                 </table>
                 <div id='prix_total'>
-                    <strong>Total : </strong> <span id='total'>0</span> €
+                    <strong>Total : </strong> <span style='font-size:1.3em' id='total'></span> €
                 </div><br/>
                 <div>
                   <input type='submit' name='commander' value='Commander' />

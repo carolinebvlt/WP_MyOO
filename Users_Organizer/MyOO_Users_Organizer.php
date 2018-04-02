@@ -72,29 +72,29 @@ class MyOO_Users_Organizer
     if(is_page('Mon compte')){
       $data_children = $this->get_all_data();
       $portions = [
-        (int)get_option('S_tartines'),
-        (int)get_option('M_tartines'),
-        (int)get_option('L_tartines'),
-        (int)get_option('S_baguette'),
-        (int)get_option('M_baguette'),
-        (int)get_option('L_baguette')
+        'S_tartines' => (int)get_option('S_tartines'),
+        'M_tartines' => (int)get_option('M_tartines'),
+        'L_tartines' => (int)get_option('L_tartines'),
+        'S_baguette' => (int)get_option('S_baguette'),
+        'M_baguette' => (int)get_option('M_baguette'),
+        'L_baguette' => (int)get_option('L_baguette')
       ];
       $prix = [
-        (float)get_option('S_1j'),
-        (float)get_option('S_2j'),
-        (float)get_option('S_3j'),
-        (float)get_option('S_4j'),
-        (float)get_option('S_5j'),
-        (float)get_option('M_1j'),
-        (float)get_option('M_2j'),
-        (float)get_option('M_3j'),
-        (float)get_option('M_4j'),
-        (float)get_option('M_5j'),
-        (float)get_option('L_1j'),
-        (float)get_option('L_2j'),
-        (float)get_option('L_3j'),
-        (float)get_option('L_4j'),
-        (float)get_option('L_5j'),
+        'S_1j' => (float)get_option('S_1j'),
+        'S_2j' => (float)get_option('S_2j'),
+        'S_3j' => (float)get_option('S_3j'),
+        'S_4j' => (float)get_option('S_4j'),
+        'S_5j' => (float)get_option('S_5j'),
+        'M_1j' => (float)get_option('M_1j'),
+        'M_2j' => (float)get_option('M_2j'),
+        'M_3j' => (float)get_option('M_3j'),
+        'M_4j' => (float)get_option('M_4j'),
+        'M_5j' => (float)get_option('M_5j'),
+        'L_1j' => (float)get_option('L_1j'),
+        'L_2j' => (float)get_option('L_2j'),
+        'L_3j' => (float)get_option('L_3j'),
+        'L_4j' => (float)get_option('L_4j'),
+        'L_5j' => (float)get_option('L_5j'),
       ];
       $data = [$data_children, $portions, $prix, $_SESSION['user_data']];
 
