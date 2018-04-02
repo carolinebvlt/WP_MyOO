@@ -32,7 +32,6 @@ function get_my_form(childId)
     }
   }
   else{
-    console.log('lol');
     document.getElementById('last_name').value = "";
     document.getElementById('first_name').value = "";
     document.getElementById('school').value = "";
