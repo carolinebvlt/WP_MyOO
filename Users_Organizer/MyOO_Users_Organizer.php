@@ -96,7 +96,7 @@ class MyOO_Users_Organizer
         (float)get_option('L_4j'),
         (float)get_option('L_5j'),
       ];
-      $data = [$data_children, $portions, $prix];
+      $data = [$data_children, $portions, $prix, $_SESSION['user_data']];
 
       if(wp_script_is('account_datascript')){
         wp_localize_script('account_datascript', 'dataUser', $data);

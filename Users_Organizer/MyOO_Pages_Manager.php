@@ -79,7 +79,7 @@ class MyOO_Pages_Manager
 
   private function account_html(){
     return "<div id='tribu'>
-              <h2>Tribu ".$_SESSION['user_data']->tribu."</h2>
+              <h2>Tribu <span id='tribu_name'></span></h2>
               <div id='children_buttons'>
               </div>
               <div style='height:3vh;clear:both;'></div>
@@ -145,7 +145,7 @@ class MyOO_Pages_Manager
             <div id='commande'>
               <h1>Ma commande </h1>
               <form id='commande_totale_form' method='post' action=''>
-                <table style='display:none'>
+                <table id='table_days' style='display:none'>
                   <tr>
                     <th></th>
                     <th>Lun</th>
@@ -154,8 +154,6 @@ class MyOO_Pages_Manager
                     <th>Jeu</th>
                     <th>Ven</th>
                   </tr>
-                  <div id='days_form'>
-                  </div>
                 </table>
                 <div id='prix_total'>
                     <strong>Total : </strong> <span id='total'>0</span> €
