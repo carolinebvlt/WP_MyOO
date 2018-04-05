@@ -61,8 +61,7 @@ class MyOO_Users_Organizer
     }
 
     elseif (isset($_POST['save_choices'])){
-      $id = $this->save_child();
-      $this->users_manager->save_preferences($id);
+      $this->save_child();
       wp_redirect('http://localhost/php/wordpress/index.php/mon-compte/');
       exit;
     }
@@ -117,7 +116,7 @@ class MyOO_Users_Organizer
       $child = [];
       $child [] = $one_child;
       $id = $one_child->id;
-      $child [] = $this->users_manager->get_pref($id);
+      $child [] = $this->users_manager->get_child_params($id);
       $child [] = $this->users_manager->get_likes($id);
       $child [] = $this->users_manager->get_dislikes($id);
       $children [] = $child;
@@ -151,8 +150,21 @@ class MyOO_Users_Organizer
           (isset($_POST['school'])      && !empty($_POST['school']))      &&
           (isset($_POST['classroom'])   && !empty($_POST['classroom']))
         ){
-          $id = $this->users_manager->add_child();
-          return $id;
+          $last_name = $_POST['last_name'];
+          $first_name = $_POST['first_name'];
+          if(is_null($this->users_manager->child_exists($first_name, $last_name))){
+            var_dump($this->users_manager->child_exists($first_name, $last_name));
+            $id = $this->users_manager->add_child();
+            $this->users_manager->save_preferences($id);
+          }
+          else{
+            $child = $this->users_manager->child_exists($first_name, $last_name);
+            $this->users_manager->update_child($child->id);
+            $this->users_manager->save_preferences($child->id);
+          }
+    }
+    else{
+      echo 'ERREUR ! Manque des champs !';
     }
   }
 
@@ -161,7 +173,7 @@ class MyOO_Users_Organizer
 /* ---------------- HTML --------------- */
 
   public function admin_users_html(){ // dont touch
-    $data = $users_manager->get_users();
+    $data = $users_manager->get_all_users();
     echo '<div class="wrap theme-options-page"><h1>'.get_admin_page_title().'</h1></div><br/>';
     echo "<table>";
     echo "<tr>
