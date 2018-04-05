@@ -120,9 +120,8 @@ class MyOO_Pages_Manager
                   </td>
                 </tr>
                 <tr>
-                <tr>
                   <th>
-                    Fruit :
+                    Pain :
                   </th>
                   <th>
                     Appétit :
@@ -130,13 +129,25 @@ class MyOO_Pages_Manager
                 </tr>
                 <tr>
                   <td>
-                    <input type='radio' name='fruit' value='oui' />Oui
-                    <input type='radio' name='fruit' value='non' />Non
+                    <input type='radio' name='pain' value='blanc' />Blanc
+                    <input type='radio' name='pain' value='cereales' />5 céréales
+                    <input type='radio' name='pain' value='baguette' />Baguette
                   </td>
                   <td>
                     <input type='radio' name='portion' value='S' />Benjamin <i style='font-size:0.8em'>(2 tartines ou 1/4 de baguette)</i>
                     <input type='radio' name='portion' value='M' />Cadette <i style='font-size:0.8em'>(4 tartines ou 1/3 de baguette)</i>
                     <input type='radio' name='portion' value='L' />Ainé <i style='font-size:0.8em'>(6 tartines ou 1/2 de baguette)</i>
+                  </td>
+                </tr>
+                <tr>
+                  <th>
+                    Fruit :
+                  </th>
+                </tr>
+                <tr>
+                  <td>
+                    <input type='radio' name='fruit' value='oui' />Oui
+                    <input type='radio' name='fruit' value='non' />Non
                   </td>
                 </tr>
               </table>
