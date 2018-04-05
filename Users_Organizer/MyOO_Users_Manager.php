@@ -153,7 +153,7 @@ class MyOO_Users_Manager
       'portion' => $portion
     ];
 
-    $row = $this->get_child($id_child);
+    $row = $this->get_child_params($id_child);
     if(is_null($row)){
       //add child_infos
       $this->add_child_params($id_child);
@@ -171,6 +171,7 @@ class MyOO_Users_Manager
       /* --- child_params --- */
 
   private function add_child_params($id){
+    global $wpdb;
     $wpdb->insert("{$wpdb->prefix}tartinette_child_params", [
       'id_child'  => $id,
       'fruit'     => $this->child_params['fruit'],
@@ -191,7 +192,7 @@ class MyOO_Users_Manager
       'fruit'     => $this->child_params['fruit'],
       'portion'   => $this->child_params['portion']
     ];
-    $wpdb->update("{$wpdb->prefix}tartinette_child_params", $data, ['id' => $id]);
+    $wpdb->update($wpdb->prefix."tartinette_child_params", $data, ['id_child' => $id]);
   }
 
       /* --- likes --- */
@@ -226,7 +227,7 @@ class MyOO_Users_Manager
       'italien'         => $this->likes['italien'],
       'halal'           => $this->likes['halal']
     ];
-    $wpdb->update("{$wpdb->prefix}tartinette_likes", $data, ['id' => $id]);
+    $wpdb->update("{$wpdb->prefix}tartinette_likes", $data, ['id_child' => $id]);
   }
 
       /* --- dislikes --- */
@@ -259,7 +260,7 @@ class MyOO_Users_Manager
       'legumaise'       => $this->dislikes['legumaise'],
       'pesto'           => $this->dislikes['pesto'],
     ];
-    $wpdb->update("{$wpdb->prefix}tartinette_dislikes", $data, ['id' => $id]);
+    $wpdb->update("{$wpdb->prefix}tartinette_dislikes", $data, ['id_child' => $id]);
   }
 
 

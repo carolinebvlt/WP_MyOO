@@ -153,7 +153,6 @@ class MyOO_Users_Organizer
           $last_name = $_POST['last_name'];
           $first_name = $_POST['first_name'];
           if(is_null($this->users_manager->child_exists($first_name, $last_name))){
-            var_dump($this->users_manager->child_exists($first_name, $last_name));
             $id = $this->users_manager->add_child();
             $this->users_manager->save_preferences($id);
           }
