@@ -25,11 +25,12 @@ class MyOO_DB_Installer
                 `classroom` VARCHAR(10) NOT NULL ,
                 PRIMARY KEY (`id`)) ENGINE = InnoDB CHARSET=utf8 COLLATE utf8_general_ci;";
 
-      $sql_tartinette_preferences =
-        "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}tartinette_preferences (
+      $sql_tartinette_child_params =
+        "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}tartinette_child_params (
                 `id_child` INT NOT NULL ,
                 `fruit` BOOLEAN NOT NULL ,
-                `portion` ENUM('S','M','L') NOT NULL )
+                `portion` ENUM('S','M','L') NOT NULL,
+                `pain` ENUM('blanc','cereales','baguette') NOT NULL)
                 ENGINE = InnoDB CHARSET=utf8 COLLATE utf8_general_ci;";
 
       $sql_tartinette_likes =
@@ -74,7 +75,7 @@ class MyOO_DB_Installer
 
       $wpdb->query($sql_tartinette_users);
       $wpdb->query($sql_tartinette_children);
-      $wpdb->query($sql_tartinette_preferences);
+      $wpdb->query($sql_tartinette_child_params);
       $wpdb->query($sql_tartinette_likes);
       $wpdb->query($sql_tartinette_dislikes);
       $wpdb->query($sql_tartinette_already_had);

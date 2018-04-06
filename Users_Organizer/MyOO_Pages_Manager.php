@@ -28,6 +28,12 @@ class MyOO_Pages_Manager
     $this->add_page($title, $content);
   }
 
+  public function add_panic_page(){
+    $title = 'Panic !';
+    $content = $this->panic_html();
+    $this->add_page($title,$content);
+  }
+
   private function add_page($page_title, $page_content){
     global $wpdb;
     $sql = "SELECT * FROM {$wpdb->prefix}posts WHERE post_title = '$page_title' AND post_status = 'publish' AND post_type = 'page' ";
@@ -120,9 +126,8 @@ class MyOO_Pages_Manager
                   </td>
                 </tr>
                 <tr>
-                <tr>
                   <th>
-                    Fruit :
+                    Pain :
                   </th>
                   <th>
                     Appétit :
@@ -130,13 +135,25 @@ class MyOO_Pages_Manager
                 </tr>
                 <tr>
                   <td>
-                    <input type='radio' name='fruit' value='oui' />Oui
-                    <input type='radio' name='fruit' value='non' />Non
+                    <input type='radio' name='pain' value='blanc' />Blanc
+                    <input type='radio' name='pain' value='cereales' />5 céréales
+                    <input type='radio' name='pain' value='baguette' />Baguette
                   </td>
                   <td>
                     <input type='radio' name='portion' value='S' />Benjamin <i style='font-size:0.8em'>(2 tartines ou 1/4 de baguette)</i>
                     <input type='radio' name='portion' value='M' />Cadette <i style='font-size:0.8em'>(4 tartines ou 1/3 de baguette)</i>
                     <input type='radio' name='portion' value='L' />Ainé <i style='font-size:0.8em'>(6 tartines ou 1/2 de baguette)</i>
+                  </td>
+                </tr>
+                <tr>
+                  <th>
+                    Fruit :
+                  </th>
+                </tr>
+                <tr>
+                  <td>
+                    <input type='radio' name='fruit' value='oui' />Oui
+                    <input type='radio' name='fruit' value='non' />Non
                   </td>
                 </tr>
               </table>
@@ -168,9 +185,59 @@ class MyOO_Pages_Manager
   private function tartinette_html(){
     return "
       <form method='post' action=''>
-        <input type='submit' name='go_tartinette' value='Tartinette' />
+        <input type='submit' name='go_tartinette' value='Tartinette' /><br/><br/>
+        <input type='submit' name='go_panic' value='Panic !' style='background-color:red;width:100px;height:100px;border-radius:50%;' />
       </form>
         ";
+  }
+
+  private function panic_html(){
+    return "<div id='tribu'>
+              <h1 style='color:red'>Tribu <span id='tribu_name'></span> en panic !</h1>
+              <div id='children_buttons'>
+              </div>
+              <div style='height:3vh;clear:both;'></div>
+              <div style='clear:both'><input type='button' onclick='get_child_form(0)' value='Ajouter un enfant' /></div>
+            </div>
+            <div id='panic_form' style='display:none'>
+              <form action='' method='post' >
+                <div>
+                  <input id='last_name' type='text' name='last_name' value='' placeholder='Nom' />
+                  <input id='first_name' type='text' name='first_name' value='' placeholder='Prénom' />
+                  <input id='school' type='text' name='school' value='' placeholder='Ecole'/>
+                  <input id='classroom' type='text' name='classroom' value='' placeholder='Classe'>
+                </div>
+                <div style='height:3vh;clear:both;'></div>
+                <div><input type='submit' name='submit_child' value='Ok' /></div>
+                <div style='height:3vh;clear:both;'></div>
+              </form>
+            </div>
+            <div id='commande' style='display:none'>
+              <h2 style='color:red'>Ma commande </h2>
+              <form id='commande_totale_form' method='post' action=''>
+                <table id='my_table'>
+                  <tr>
+                    <th>
+                    </th>
+                    <th>
+                      Aime :
+                    </th>
+                    <th>
+                      Appétit :
+                    </th>
+                    <th>
+                      Fruit :
+                    </th>
+                  </tr>
+                </table>
+                <div id='prix_total'>
+                    <strong>Total : </strong> <span style='font-size:1.3em' id='total'></span> €
+                </div><br/>
+                <div>
+                  <input type='submit' name='commander' value='Commander' />
+                </div>
+              </form>
+            </div>";
   }
 
 } // end class

@@ -146,11 +146,13 @@ class MyOO_Users_Manager
     ];
 
     $fruit = ($_POST['fruit'] === 'oui') ? true : false;
-    $portion = $_POST['portion'];
+    $portion = (isset($_POST['portion'])) ? $_POST['portion'] : 'S';
+    $pain = (isset($_POST['pain'])) ? $_POST['pain'] : 'blanc';
 
     $this->child_params = [
       'fruit'   => $fruit,
-      'portion' => $portion
+      'portion' => $portion,
+      'pain'    => $pain
     ];
 
     $row = $this->get_child_params($id_child);
@@ -175,7 +177,8 @@ class MyOO_Users_Manager
     $wpdb->insert("{$wpdb->prefix}tartinette_child_params", [
       'id_child'  => $id,
       'fruit'     => $this->child_params['fruit'],
-      'portion'   => $this->child_params['portion']
+      'portion'   => $this->child_params['portion'],
+      'pain'      => $this->child_params['pain']
     ]);
   }
 
@@ -190,7 +193,8 @@ class MyOO_Users_Manager
     $data = [
       'id_child'  => $id,
       'fruit'     => $this->child_params['fruit'],
-      'portion'   => $this->child_params['portion']
+      'portion'   => $this->child_params['portion'],
+      'pain'      => $this->child_params['pain']
     ];
     $wpdb->update($wpdb->prefix."tartinette_child_params", $data, ['id_child' => $id]);
   }

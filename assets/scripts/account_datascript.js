@@ -1,4 +1,4 @@
-console.log('Yo!!!!');
+console.log('Yoplait!!!!');
 // console.log(dataUser[0]); // enfants
 // console.log(dataUser[1]); // portions dispo
 // console.log(dataUser[2]); // prix
@@ -17,7 +17,7 @@ window.addEventListener('click', function(e){
   if(e.target.value === 'on'){
     Total = 0 ;
     dataUser[0].forEach(function(e){
-      test(e);
+      calcul_total(e);
     })
     console.log(Total);
     document.getElementById('total').innerHTML = Total;
@@ -74,7 +74,7 @@ function days_form(){
 }
 
 
-function test(e){
+function calcul_total(e){
   // console.log(dataUser[2].L_1j);
 
   // console.log(document.getElementById(e[0].id + '_td1'));
@@ -174,7 +174,7 @@ function get_my_form(childId){
     show(data_child_form);
     /*
       child[0] = infos
-      child[1] = pref
+      child[1] = child_params
       child[2] = likes
       child[3] = dislikes
     */
@@ -195,6 +195,13 @@ function get_my_form(childId){
         }
         if(pref === "portion"){
           document.getElementsByName('portion').forEach(function(e){
+            if(e.value === child[1][pref]){
+              e.checked = true;
+            }
+          });
+        }
+        if(pref === "pain"){
+          document.getElementsByName('pain').forEach(function(e){
             if(e.value === child[1][pref]){
               e.checked = true;
             }

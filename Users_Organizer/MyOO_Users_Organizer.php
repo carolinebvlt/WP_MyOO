@@ -15,6 +15,7 @@ class MyOO_Users_Organizer
     add_action('init', [$this->pages_manager, 'add_subscription_page']);
     add_action('init', [$this->pages_manager, 'add_connexion_page']);
     add_action('init', [$this->pages_manager, 'add_account_page']);
+    add_action('init', [$this->pages_manager, 'add_panic_page']);
     add_action('wp_loaded', [$this, 'routeur']);
     add_action('wp', [$this, 'enqueue_datascript']);
   }
@@ -35,6 +36,18 @@ class MyOO_Users_Organizer
       }
     }
 
+    elseif(isset($_POST['go_panic'])){
+      $_SESSION['panic'] = true;
+      if($_SESSION['connected'] === true){
+        wp_redirect('http://localhost/php/wordpress/index.php/panic/');
+        exit;
+      }
+      else{
+        wp_redirect('http://localhost/php/wordpress/index.php/connexion/');
+        exit;
+      }
+    }
+
     elseif (isset($_POST['submit_connexion'])){
       $email = $_POST['email'];
       $password = $_POST['password'];
@@ -42,7 +55,12 @@ class MyOO_Users_Organizer
       if($data->pass_h === sha1($password)){
         $_SESSION['connected'] = true;
         $_SESSION['user_data'] = $data;
-        wp_redirect('http://localhost/php/wordpress/index.php/mon-compte/');
+        if($_SESSION['panic'] === true){
+          wp_redirect('http://localhost/php/wordpress/index.php/panic/');
+        }
+        else{
+          wp_redirect('http://localhost/php/wordpress/index.php/mon-compte/');
+        }
         exit;
       }
     }
@@ -105,23 +123,59 @@ class MyOO_Users_Organizer
         wp_localize_script('account_datascript', 'dataUser', $data);
         wp_enqueue_script('account_datascript');
       }
+    } // end script mon compte
+    if(is_page('Panic !')){
+      $children = $this->get_all_data();
+
+      $portions = [
+        'S_tartines' => (int)get_option('S_tartines'),
+        'M_tartines' => (int)get_option('M_tartines'),
+        'L_tartines' => (int)get_option('L_tartines')
+      ];
+
+      $prix = [
+        'S_panic' => (int)get_option('S_panic'),
+        'M_panic' => (int)get_option('M_panic'),
+        'L_panic' => (int)get_option('L_panic'),
+        'fruit'   => (int)get_option('supplement_fruit')
+      ];
+
+      $data = [$children, $portions, $prix, $_SESSION['user_data']];
+
+      if(wp_script_is('panic_datascript')){
+        wp_localize_script('panic_datascript', 'dataUser', $data);
+      }
+      else{
+        wp_register_script('panic_datascript', plugin_dir_url(__FILE__) . '../assets/scripts/panic_datascript.js');
+        wp_localize_script('panic_datascript', 'dataUser', $data);
+        wp_enqueue_script('panic_datascript');
+      }
+
     }
   }
 
   private function get_all_data(){
-    $tribu_name = $_SESSION['user_data']->tribu;
-    $children_objects = $this->users_manager->get_children($tribu_name);
-    $children = [];
-    foreach ($children_objects as $one_child) {
-      $child = [];
-      $child [] = $one_child;
-      $id = $one_child->id;
-      $child [] = $this->users_manager->get_child_params($id);
-      $child [] = $this->users_manager->get_likes($id);
-      $child [] = $this->users_manager->get_dislikes($id);
-      $children [] = $child;
+    if(!$_SESSION['panic'] === true){
+      $tribu_name = $_SESSION['user_data']->tribu;
+      $children_objects = $this->users_manager->get_children($tribu_name);
+      $children = [];
+      foreach ($children_objects as $one_child) {
+        $child = [];
+        $child [] = $one_child;
+        $id = $one_child->id;
+        $child [] = $this->users_manager->get_child_params($id);
+        $child [] = $this->users_manager->get_likes($id);
+        $child [] = $this->users_manager->get_dislikes($id);
+        $children [] = $child;
+      }
+      return $children;
     }
-    return $children;
+    else{
+      $tribu_name = $_SESSION['user_data']->tribu;
+      $children = $this->users_manager->get_children($tribu_name);
+      return $children;
+    }
+
   }
 
   public function save_new_user(){ /*AC*/
