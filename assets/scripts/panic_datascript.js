@@ -6,15 +6,31 @@ console.log('Baaaaaaaaaaaaaaaaaaaananasplit !');
   console.log(dataUser[3]); // $_SESSION['user_data'] {obj}
 */
 
+var Total;
+
 window.onload = function(){
   insert_tribu_name();
   insert_children_buttons();
-  day_form();
+  fill_table();
 }
 
-function save_panic(id){
-  console.log();
-}
+window.addEventListener('click', function(e){
+
+  if(
+      (e.target.value === 'oui') ||
+      (e.target.value === 'non') ||
+      (e.target.value === 'S')   ||
+      (e.target.value === 'M')   ||
+      (e.target.value === 'L')
+    ){
+        Total = 0 ;
+        dataUser[0].forEach(function(e){
+          calcul_total(e);
+        })
+        console.log(Total);
+        document.getElementById('total').innerHTML = Total;
+  }
+})
 
 function show(show){
   show.style.display = "block";
@@ -30,12 +46,12 @@ function insert_children_buttons(){
   var children_buttons_box = document.getElementById('children_buttons');
   var html ="";
   dataUser[0].forEach(function(e){
-    html += "<form style='float:left' method='post' action=''><input onclick='get_my_form("+ e.id +")' style='whidth:100px; height:50px;' type='button' value='" + e.first_name +"'/></form>";
+    html += "<form style='float:left' method='post' action=''><input onclick='get_child_form("+ e.id +")' style='whidth:100px; height:50px;' type='button' value='" + e.first_name +"'/></form>";
   });
   children_buttons_box.innerHTML = html;
 }
 
-function get_my_form(childId){
+function get_child_form(childId){
   if(childId === 0){
 
     show(panic_form);
@@ -69,14 +85,26 @@ function get_my_form(childId){
   }
 }
 
-function day_form(){
+function fill_table(){
   if(typeof dataUser[0] !== "undefined"){
     dataUser[0].forEach(function(e){
       var table = document.getElementById('my_table');
       var tr = document.createElement('tr');
-      tr.innerHTML = "<th>"+e.first_name+"</th><td><input type='checkbox' name='classique' />Classique <br/><input type='checkbox' name='fromage'  />Fromage <br/><input type='checkbox' name='halal'  />Halal</td><td><input type='radio' name='portion' value='S' />Benjamin <i style='font-size:0.8em'>(2 tartines)</i> <br/><input type='radio' name='portion' value='M' />Cadette <i style='font-size:0.8em'>(4 tartines)</i> <br/><input type='radio' name='portion' value='L' />Ainé <i style='font-size:0.8em'>(6 tartines)</i></td><td><input type='radio' name='fruit' value='oui' />Oui <br/><input type='radio' name='fruit' value='non' />Non</td>";
+      tr.innerHTML = "<th>"+e.first_name+"</th><td><input type='checkbox' checked=true name='classique"+e.id+"' />Classique <br/><input type='checkbox' checked=true name='fromage"+e.id+"'  />Fromage <br/><input type='checkbox' checked=true name='halal"+e.id+"'  />Halal</td><td><input type='radio' name='portion"+e.id+"' checked=true value='S' />Benjamin <i style='font-size:0.8em'>(2 tartines)</i> <br/><input type='radio' name='portion"+e.id+"' value='M' />Cadette <i style='font-size:0.8em'>(4 tartines)</i> <br/><input type='radio' name='portion"+e.id+"' value='L' />Ainé <i style='font-size:0.8em'>(6 tartines)</i></td><td><input type='radio' name='fruit"+e.id+"' value='oui' checked=true />Oui <br/><input type='radio' name='fruit"+e.id+"' value='non' />Non</td>";
       table.appendChild(tr);
       show(commande);
     });
+  }
+}
+
+function calcul_total(e){
+  if(document.getElementsByName('portion'+e.id)[0].checked === true){
+    Total = Total + dataUser[2]['S_panic'];
+  }
+  else if(document.getElementsByName('portion'+e.id)[1].checked === true){
+    Total = Total + dataUser[2]['M_panic'];
+  }
+  else if(document.getElementsByName('portion'+e.id)[2].checked === true){
+    Total = Total + dataUser[2]['L_panic'];
   }
 }

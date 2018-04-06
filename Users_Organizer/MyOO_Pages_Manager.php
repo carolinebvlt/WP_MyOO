@@ -193,11 +193,11 @@ class MyOO_Pages_Manager
 
   private function panic_html(){
     return "<div id='tribu'>
-              <h2 style='color:red'>Tribu <span id='tribu_name'></span> en panic !</h2>
+              <h1 style='color:red'>Tribu <span id='tribu_name'></span> en panic !</h1>
               <div id='children_buttons'>
               </div>
               <div style='height:3vh;clear:both;'></div>
-              <div style='clear:both'><input type='button' onclick='get_my_form(0)' value='Ajouter un enfant' /></div>
+              <div style='clear:both'><input type='button' onclick='get_child_form(0)' value='Ajouter un enfant' /></div>
             </div>
             <div id='panic_form' style='display:none'>
               <form action='' method='post' >
@@ -213,7 +213,7 @@ class MyOO_Pages_Manager
               </form>
             </div>
             <div id='commande' style='display:none'>
-              <h1 style='color:red'>Ma commande </h1>
+              <h2 style='color:red'>Ma commande </h2>
               <form id='commande_totale_form' method='post' action=''>
                 <table id='my_table'>
                   <tr>
