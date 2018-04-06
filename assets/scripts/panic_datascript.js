@@ -98,13 +98,20 @@ function fill_table(){
 }
 
 function calcul_total(e){
+  var fruit;
+  if(document.getElementsByName('fruit'+e.id)[0].checked === true){
+    fruit = 0.5;
+  }
+  else{
+    fruit = 0;
+  }
   if(document.getElementsByName('portion'+e.id)[0].checked === true){
-    Total = Total + dataUser[2]['S_panic'];
+    Total = Total + fruit + dataUser[2]['S_panic'];
   }
   else if(document.getElementsByName('portion'+e.id)[1].checked === true){
-    Total = Total + dataUser[2]['M_panic'];
+    Total = Total + fruit + dataUser[2]['M_panic'];
   }
   else if(document.getElementsByName('portion'+e.id)[2].checked === true){
-    Total = Total + dataUser[2]['L_panic'];
+    Total = Total + fruit + dataUser[2]['L_panic'];
   }
 }

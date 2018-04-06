@@ -136,7 +136,8 @@ class MyOO_Users_Organizer
       $prix = [
         'S_panic' => (int)get_option('S_panic'),
         'M_panic' => (int)get_option('M_panic'),
-        'L_panic' => (int)get_option('L_panic')
+        'L_panic' => (int)get_option('L_panic'),
+        'fruit'   => (int)get_option('supplement_fruit')
       ];
 
       $data = [$children, $portions, $prix, $_SESSION['user_data']];
