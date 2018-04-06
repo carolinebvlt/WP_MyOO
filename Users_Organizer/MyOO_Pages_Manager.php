@@ -28,6 +28,12 @@ class MyOO_Pages_Manager
     $this->add_page($title, $content);
   }
 
+  public function add_panic_page(){
+    $title = 'Panic !';
+    $content = $this->panic_html();
+    $this->add_page($title,$content);
+  }
+
   private function add_page($page_title, $page_content){
     global $wpdb;
     $sql = "SELECT * FROM {$wpdb->prefix}posts WHERE post_title = '$page_title' AND post_status = 'publish' AND post_type = 'page' ";
@@ -179,9 +185,82 @@ class MyOO_Pages_Manager
   private function tartinette_html(){
     return "
       <form method='post' action=''>
-        <input type='submit' name='go_tartinette' value='Tartinette' />
+        <input type='submit' name='go_tartinette' value='Tartinette' /><br/><br/>
+        <input type='submit' name='go_panic' value='Panic !' style='background-color:red;width:100px;height:100px;border-radius:50%;' />
       </form>
         ";
+  }
+
+  private function panic_html(){
+    return "<div id='tribu'>
+              <h2>Tribu <span id='tribu_name'></span> en panic !</h2>
+              <div id='children_buttons'>
+              </div>
+              <div style='height:3vh;clear:both;'></div>
+              <div style='clear:both'><input type='button' onclick='get_my_form(0)' value='Ajouter un enfant' /></div>
+            </div>
+            <div id='panic_form' style='display:none'>
+              <form action='' method='post' >
+                <div>
+                  <input id='last_name' type='text' name='last_name' value='' placeholder='Nom' />
+                  <input id='first_name' type='text' name='first_name' value='' placeholder='Prénom' />
+                  <input id='school' type='text' name='school' value='' placeholder='Ecole'/>
+                  <input id='classroom' type='text' name='classroom' value='' placeholder='Classe'>
+                </div>
+                <div style='height:3vh;clear:both;'></div>
+                <table>
+                  <tr>
+                    <th>
+                      Aime :
+                    </th>
+                    <th>
+                      Appétit :
+                    </th>
+                    <th>
+                      Fruit :
+                    </th>
+                  </tr>
+                  <tr>
+                    <td>
+                      <input type='checkbox' name='classique' />Classique
+                      <input type='checkbox' name='fromage'  />Fromage
+                      <input type='checkbox' name='halal'  />Halal
+                    </td>
+                    <td>
+                      <input type='radio' name='portion' value='S' />Benjamin <i style='font-size:0.8em'>(2 tartines)</i>
+                      <input type='radio' name='portion' value='M' />Cadette <i style='font-size:0.8em'>(4 tartines)</i>
+                      <input type='radio' name='portion' value='L' />Ainé <i style='font-size:0.8em'>(6 tartines)</i>
+                    </td>
+                    <td>
+                      <input type='radio' name='fruit' value='oui' />Oui
+                      <input type='radio' name='fruit' value='non' />Non
+                    </td>
+                  </tr>
+                </table>
+                <div><input type='submit' name='save_choices' value='Ok'/></div>
+              </form>
+            </div>
+            <div id='commande'>
+              <h1>Ma commande </h1>
+              <form id='commande_totale_form' method='post' action=''>
+                <table id='table_days' style='display:none'>
+                  <tr>
+                    <th></th>
+                    <th>Lun</th>
+                    <th>Mar</th>
+                    <th>Mer</th>
+                    <th>Jeu</th>
+                    <th>Ven</th>
+                  </tr>
+                </table>
+                <div id='prix_total'>
+                    <strong>Total : </strong> <span style='font-size:1.3em' id='total'></span> €
+                </div><br/>
+                <div>
+                  <input type='submit' name='commander' value='Commander' />
+                </div>
+              </form>
+            </div>";
   }
 
 } // end class
