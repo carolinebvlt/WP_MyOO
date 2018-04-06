@@ -85,7 +85,7 @@ class MyOO_Pages_Manager
 
   private function account_html(){
     return "<div id='tribu'>
-              <h2>Tribu <span id='tribu_name'></span></h2>
+              <h1>Tribu <span id='tribu_name'></span></h1>
               <div id='children_buttons'>
               </div>
               <div style='height:3vh;clear:both;'></div>
@@ -160,7 +160,7 @@ class MyOO_Pages_Manager
               <div><input type='submit' name='save_choices' value='Ok'/></div>
             </form>
             <div id='commande'>
-              <h1>Ma commande </h1>
+              <h2>Ma commande </h2>
               <form id='commande_totale_form' method='post' action=''>
                 <table id='table_days' style='display:none'>
                   <tr>
