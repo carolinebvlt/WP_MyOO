@@ -17,7 +17,7 @@ class MyOO_Users_Organizer
     add_action('init', [$this->pages_manager, 'add_account_page']);
     add_action('init', [$this->pages_manager, 'add_panic_page']);
     add_action('wp_loaded', [$this, 'routeur']);
-    add_action('wp', [$this, 'enqueue_datascript']);
+    add_action('wp', [$this, 'enqueue_datascripts']);
   }
 
   public function add_admin_menu_users(){
@@ -25,7 +25,7 @@ class MyOO_Users_Organizer
   }
 
   public function routeur(){
-    if (isset($_POST['go_tartinette'])){
+    if (isset($_POST['go_abo'])){
       $_SESSION['panic'] = false;
       if($_SESSION['connected'] === true){
         wp_redirect('http://localhost/php/wordpress/index.php/mon-compte/');
@@ -86,7 +86,7 @@ class MyOO_Users_Organizer
     }
   }
 
-  public function enqueue_datascript(){
+  public function enqueue_datascripts(){
     if(is_page('Mon compte')){
       $data_children = $this->get_all_data();
       $portions = [
@@ -151,7 +151,12 @@ class MyOO_Users_Organizer
         wp_localize_script('panic_datascript', 'dataUser', $data);
         wp_enqueue_script('panic_datascript');
       }
-
+    }
+    if(is_page('Tartinette')){
+      if(!wp_script_is('home_script')){
+        wp_register_script('home_script', plugin_dir_url(__FILE__) . '../assets/scripts/home_script.js');
+        wp_enqueue_script('home_script');
+      }
     }
   }
 

@@ -1,4 +1,4 @@
-console.log('Yoplait!!!!');
+console.log('Yooooooplait!!!!');
 // console.log(dataUser); // enfants
 // console.log(dataUser[1]); // portions dispo
 // console.log(dataUser[2]); // prix
@@ -10,6 +10,7 @@ window.onload = function(){
   insert_tribu_name();
   insert_children_buttons();
   days_form();
+  document.getElementById('total').innerHTML = "0";
 }
 
 window.addEventListener('click', function(e){
@@ -19,7 +20,6 @@ window.addEventListener('click', function(e){
     dataUser[0].forEach(function(e){
       calcul_total(e);
     })
-    console.log(Total);
     document.getElementById('total').innerHTML = Total;
   }
 })
@@ -79,6 +79,7 @@ function calcul_total(e){
   // console.log(dataUser[2].L_1j);
 
   // console.log(document.getElementById(e[0].id + '_td1'));
+  console.log(e);
 
   var count = 0;
   if(document.getElementById(e[0].id + '_td1').checked === true){
@@ -96,37 +97,43 @@ function calcul_total(e){
   if(document.getElementById(e[0].id + '_td5').checked === true){
     count += 1;
   }
+
+  switch (e[1].fruit) {
+    case "1": sup_fruit = 0.5;break;
+    case "0": sup_fruit = 0;break;
+  }
+
   // nombre de tartines et portion => prix
   switch (e[1].portion) {
     case 'S':
       switch (count) {
         case 0: break;
-        case 1 : Total = Total + dataUser[2].S_1j; break;
-        case 2 : Total = Total + dataUser[2].S_2j; break;
-        case 3 : Total = Total + dataUser[2].S_3j; break;
-        case 4 : Total = Total + dataUser[2].S_4j; break;
-        case 5 : Total = Total + dataUser[2].S_5j; break;
+        case 1 : Total = Total + sup_fruit + dataUser[2].S_1j; break;
+        case 2 : Total = Total + (sup_fruit*2) + dataUser[2].S_2j; break;
+        case 3 : Total = Total + (sup_fruit*3) + dataUser[2].S_3j; break;
+        case 4 : Total = Total + (sup_fruit*4) + dataUser[2].S_4j; break;
+        case 5 : Total = Total + (sup_fruit*5) + dataUser[2].S_5j; break;
       }
       break;
 
     case 'M':
       switch (count) {
         case 0: break;
-        case 1 : Total = Total + dataUser[2].M_1j; break;
-        case 2 : Total = Total + dataUser[2].M_2j; break;
-        case 3 : Total = Total + dataUser[2].M_3j; break;
-        case 4 : Total = Total + dataUser[2].M_4j; break;
-        case 5 : Total = Total + dataUser[2].M_5j; break;
+        case 1 : Total = Total + sup_fruit + dataUser[2].M_1j; break;
+        case 2 : Total = Total + (sup_fruit*2) + dataUser[2].M_2j; break;
+        case 3 : Total = Total + (sup_fruit*3) + dataUser[2].M_3j; break;
+        case 4 : Total = Total + (sup_fruit*4) + dataUser[2].M_4j; break;
+        case 5 : Total = Total + (sup_fruit*5) + dataUser[2].M_5j; break;
       }
       break;
     case 'L':
       switch (count) {
         case 0: break;
-        case 1 : Total = Total + dataUser[2].L_1j; break;
-        case 2 : Total = Total + dataUser[2].L_2j; break;
-        case 3 : Total = Total + dataUser[2].L_3j; break;
-        case 4 : Total = Total + dataUser[2].L_4j; break;
-        case 5 : Total = Total + dataUser[2].L_5j; break;
+        case 1 : Total = Total + sup_fruit + dataUser[2].L_1j; break;
+        case 2 : Total = Total + sup_fruit + dataUser[2].L_2j; break;
+        case 3 : Total = Total + sup_fruit + dataUser[2].L_3j; break;
+        case 4 : Total = Total + sup_fruit + dataUser[2].L_4j; break;
+        case 5 : Total = Total + sup_fruit + dataUser[2].L_5j; break;
       }
       break;
     default: console.log("OMG pas d'info !");break;

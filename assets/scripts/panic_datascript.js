@@ -1,4 +1,4 @@
-console.log('Baaaaaaaaaaaaaaaaaaaananasplit !');
+console.log('Bananasplit !');
 /*
   console.log(dataUser[0]); // children {obj}
   console.log(dataUser[1]); // portions [arr]
@@ -8,10 +8,19 @@ console.log('Baaaaaaaaaaaaaaaaaaaananasplit !');
 
 var Total;
 
+
+
 window.onload = function(){
   insert_tribu_name();
   insert_children_buttons();
   fill_table();
+
+  Total = 0 ;
+  dataUser[0].forEach(function(e){
+    calcul_total(e);
+  })
+  console.log(Total);
+  document.getElementById('total').innerHTML = Total;
 }
 
 window.addEventListener('click', function(e){

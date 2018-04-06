@@ -184,9 +184,17 @@ class MyOO_Pages_Manager
 
   private function tartinette_html(){
     return "
-      <form method='post' action=''>
-        <input type='submit' name='go_tartinette' value='Tartinette' /><br/><br/>
-        <input type='submit' name='go_panic' value='Panic !' style='background-color:red;width:100px;height:100px;border-radius:50%;' />
+      <form method='post' action='' style='display:flex;justify-content:space-around;'>
+        <div>
+          <p id='p_abo' style='text-align:center;height:30%;'>
+          </p>
+          <input type='submit' name='go_abo' value='Abo' style='background-color:chartreuse;width:150px;height:150px;border-radius:50%;font-size:1.4em;display:block;margin:auto;' />
+        </div>
+        <div>
+          <p id='p_panic' style='text-align:center;height:30%;'>
+          </p>
+          <input type='submit' name='go_panic' value='Panic' style='background-color:red;width:150px;height:150px;border-radius:50%;font-size:1.4em;display:block;margin:auto; ' />
+        </div>
       </form>
         ";
   }
