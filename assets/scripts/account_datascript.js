@@ -17,7 +17,7 @@ window.addEventListener('click', function(e){
   if(e.target.value === 'on'){
     Total = 0 ;
     dataUser[0].forEach(function(e){
-      test(e);
+      calcul_total(e);
     })
     console.log(Total);
     document.getElementById('total').innerHTML = Total;
@@ -74,7 +74,7 @@ function days_form(){
 }
 
 
-function test(e){
+function calcul_total(e){
   // console.log(dataUser[2].L_1j);
 
   // console.log(document.getElementById(e[0].id + '_td1'));

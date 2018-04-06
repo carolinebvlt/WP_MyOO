@@ -193,7 +193,7 @@ class MyOO_Pages_Manager
 
   private function panic_html(){
     return "<div id='tribu'>
-              <h2>Tribu <span id='tribu_name'></span> en panic !</h2>
+              <h2 style='color:red'>Tribu <span id='tribu_name'></span> en panic !</h2>
               <div id='children_buttons'>
               </div>
               <div style='height:3vh;clear:both;'></div>
@@ -208,8 +208,17 @@ class MyOO_Pages_Manager
                   <input id='classroom' type='text' name='classroom' value='' placeholder='Classe'>
                 </div>
                 <div style='height:3vh;clear:both;'></div>
-                <table>
+                <div><input type='submit' name='submit_child' value='Ok' /></div>
+                <div style='height:3vh;clear:both;'></div>
+              </form>
+            </div>
+            <div id='commande' style='display:none'>
+              <h1 style='color:red'>Ma commande </h1>
+              <form id='commande_totale_form' method='post' action=''>
+                <table id='my_table'>
                   <tr>
+                    <th>
+                    </th>
                     <th>
                       Aime :
                     </th>
@@ -219,38 +228,6 @@ class MyOO_Pages_Manager
                     <th>
                       Fruit :
                     </th>
-                  </tr>
-                  <tr>
-                    <td>
-                      <input type='checkbox' name='classique' />Classique
-                      <input type='checkbox' name='fromage'  />Fromage
-                      <input type='checkbox' name='halal'  />Halal
-                    </td>
-                    <td>
-                      <input type='radio' name='portion' value='S' />Benjamin <i style='font-size:0.8em'>(2 tartines)</i>
-                      <input type='radio' name='portion' value='M' />Cadette <i style='font-size:0.8em'>(4 tartines)</i>
-                      <input type='radio' name='portion' value='L' />Ainé <i style='font-size:0.8em'>(6 tartines)</i>
-                    </td>
-                    <td>
-                      <input type='radio' name='fruit' value='oui' />Oui
-                      <input type='radio' name='fruit' value='non' />Non
-                    </td>
-                  </tr>
-                </table>
-                <div><input type='submit' name='save_choices' value='Ok'/></div>
-              </form>
-            </div>
-            <div id='commande'>
-              <h1>Ma commande </h1>
-              <form id='commande_totale_form' method='post' action=''>
-                <table id='table_days' style='display:none'>
-                  <tr>
-                    <th></th>
-                    <th>Lun</th>
-                    <th>Mar</th>
-                    <th>Mer</th>
-                    <th>Jeu</th>
-                    <th>Ven</th>
                   </tr>
                 </table>
                 <div id='prix_total'>

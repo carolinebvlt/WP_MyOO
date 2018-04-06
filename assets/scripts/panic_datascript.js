@@ -1,4 +1,4 @@
-console.log('Bananasplit !');
+console.log('Baaaaaaaaaaaaaaaaaaaananasplit !');
 /*
   console.log(dataUser[0]); // children {obj}
   console.log(dataUser[1]); // portions [arr]
@@ -9,11 +9,11 @@ console.log('Bananasplit !');
 window.onload = function(){
   insert_tribu_name();
   insert_children_buttons();
+  day_form();
 }
 
-function show_and_hide(show,hide){
-  show.style.display = "block";
-  hide.style.display = "none";
+function save_panic(id){
+  console.log();
 }
 
 function show(show){
@@ -37,6 +37,7 @@ function insert_children_buttons(){
 
 function get_my_form(childId){
   if(childId === 0){
+
     show(panic_form);
 
     document.getElementById('last_name').value = "";
@@ -44,29 +45,14 @@ function get_my_form(childId){
     document.getElementById('school').value = "";
     document.getElementById('classroom').value = "";
 
-    var node_list = document.getElementsByTagName('input');
-
-    for (var i = 0; i < node_list.length; i++) {
-      var node = node_list[i];
-      if ( (node.getAttribute('type') == 'checkbox') || (node.getAttribute('type') == 'radio') ) {
-        node.checked = false;
-      }
-    }
   }
   else{
+
     document.getElementById('last_name').value = "";
     document.getElementById('first_name').value = "";
     document.getElementById('school').value = "";
     document.getElementById('classroom').value = "";
 
-    var node_list = document.getElementsByTagName('input');
-
-    for (var i = 0; i < node_list.length; i++) {
-      var node = node_list[i];
-      if ( (node.getAttribute('type') == 'checkbox') || (node.getAttribute('type') == 'radio') ) {
-        node.checked = false;
-      }
-    }
     var child;
     dataUser[0].forEach(function(e){
       if(Number(e.id) === childId){
@@ -80,5 +66,17 @@ function get_my_form(childId){
     document.getElementById('school').value = child.school;
     document.getElementById('classroom').value = child.classroom;
 
+  }
+}
+
+function day_form(){
+  if(typeof dataUser[0] !== "undefined"){
+    dataUser[0].forEach(function(e){
+      var table = document.getElementById('my_table');
+      var tr = document.createElement('tr');
+      tr.innerHTML = "<th>"+e.first_name+"</th><td><input type='checkbox' name='classique' />Classique <br/><input type='checkbox' name='fromage'  />Fromage <br/><input type='checkbox' name='halal'  />Halal</td><td><input type='radio' name='portion' value='S' />Benjamin <i style='font-size:0.8em'>(2 tartines)</i> <br/><input type='radio' name='portion' value='M' />Cadette <i style='font-size:0.8em'>(4 tartines)</i> <br/><input type='radio' name='portion' value='L' />Ainé <i style='font-size:0.8em'>(6 tartines)</i></td><td><input type='radio' name='fruit' value='oui' />Oui <br/><input type='radio' name='fruit' value='non' />Non</td>";
+      table.appendChild(tr);
+      show(commande);
+    });
   }
 }
