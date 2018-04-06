@@ -1,5 +1,5 @@
 console.log('Yoplait!!!!');
-// console.log(dataUser[0]); // enfants
+// console.log(dataUser); // enfants
 // console.log(dataUser[1]); // portions dispo
 // console.log(dataUser[2]); // prix
 // console.log(dataUser[3]); // $_SESSION user_data
@@ -34,6 +34,7 @@ function insert_children_buttons(){
   var children_buttons_box = document.getElementById('children_buttons');
   var html ="";
   dataUser[0].forEach(function(e){
+    // console.log(e);
     html += "<form style='float:left' method='post' action=''><input onclick='get_my_form("+ e[0].id +")' style='whidth:100px; height:50px;' type='button' value='" + e[0].first_name +"'/></form>";
   });
   children_buttons_box.innerHTML = html;

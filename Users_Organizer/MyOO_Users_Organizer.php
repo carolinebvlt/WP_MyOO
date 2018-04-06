@@ -26,6 +26,7 @@ class MyOO_Users_Organizer
 
   public function routeur(){
     if (isset($_POST['go_tartinette'])){
+      $_SESSION['panic'] = false;
       if($_SESSION['connected'] === true){
         wp_redirect('http://localhost/php/wordpress/index.php/mon-compte/');
         exit;
@@ -155,7 +156,7 @@ class MyOO_Users_Organizer
   }
 
   private function get_all_data(){
-    if(!$_SESSION['panic'] === true){
+    if($_SESSION['panic'] === false){
       $tribu_name = $_SESSION['user_data']->tribu;
       $children_objects = $this->users_manager->get_children($tribu_name);
       $children = [];
@@ -170,7 +171,7 @@ class MyOO_Users_Organizer
       }
       return $children;
     }
-    else{
+    elseif($_SESSION['panic'] === true){
       $tribu_name = $_SESSION['user_data']->tribu;
       $children = $this->users_manager->get_children($tribu_name);
       return $children;
