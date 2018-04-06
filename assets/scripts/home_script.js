@@ -1,6 +1,6 @@
 console.log('hiiii');
 
-var D = new Date();
+var D = new Date(); 
 var d = D.getDay();
 
 var lundiPro = new Date();
@@ -23,18 +23,29 @@ var v = get_monthFR(vendrediPro.getMonth());
 var nextPanic = new Date();
 
 switch (d) {
-  case 5: nextPanic.setDate(D.getDate()+3) ; break;
-  case 6: nextPanic.setDate(D.getDate()+2) ; break;
-  case 0: case 1: case 2: case 3: case 4:
+  case 5:
+    if (D.getHours() < 8){ nextPanic.setDate(D.getDate()); break; }
+    else { nextPanic.setDate(D.getDate()+3); break;}
+
+  case 6:
+    nextPanic.setDate(D.getDate()+2) ;
+    break;
+
+  case 0:
     nextPanic.setDate(D.getDate()+1) ;
     break;
+
+  case 1: case 2: case 3: case 4:
+    if (D.getHours() < 8){ nextPanic.setDate(D.getDate()); break; }
+    else { nextPanic.setDate(D.getDate()+1) ; break; }
+
 }
 var n_m = get_monthFR(nextPanic.getMonth());
 var n_d = get_dayFR(nextPanic.getDay());
 
 window.onload = function(){
   document.getElementById('p_abo').innerHTML = "Commander pour la semaine <br/> <b>du lundi "+lundiPro.getDate()+" "+l+"<br/> au vendredi "+vendrediPro.getDate()+" "+v+"</b>";
-  document.getElementById('p_panic').innerHTML = "Vite ! Un pic-nic pour le <br/> <b>"+ n_d +" "+nextPanic.getDate()+" "+n_m+" !</b>";
+  document.getElementById('p_panic').innerHTML = "Vite ! <br/>Un pic-nic pour le <br/> <b>"+ n_d +" "+nextPanic.getDate()+" "+n_m+" !</b>";
 }
 
 
