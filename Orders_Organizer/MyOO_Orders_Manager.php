@@ -33,4 +33,8 @@ class MyOO_Orders_Manager
       'date_order' => $date->format('d-m-Y H:i:s')
     ]);
   }
+
+  public function hello(){
+    echo 'hello';
+  }
 }

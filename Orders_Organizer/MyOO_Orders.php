@@ -5,15 +5,20 @@
 
 class MyOO_Orders
 {
+  private $orders_manager;
+
   public function __construct(){
     add_action('admin_menu', [$this, 'add_admin_menu'], 30);
+    include_once plugin_dir_path( __FILE__ ).'/MyOO_Orders_Manager.php';
+    $this->orders_manager = new MyOO_Orders_Manager();
   }
 
   public function add_admin_menu(){
     add_submenu_page('myoo', 'Commandes', 'Commandes', 'manage_options', 'myoo_orders', [$this, 'orders_render']);
   }
-  
+
   public function orders_render(){
+    $this->orders_manager->hello();
     $date = new DateTime();
     echo '<div class="wrap theme-options-page"><h1>'.get_admin_page_title().'</h1></div><br/>';
     ?>
