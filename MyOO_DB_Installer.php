@@ -74,12 +74,14 @@ class MyOO_DB_Installer
                 `mer` BOOLEAN NOT NULL ,
                 `jeu` BOOLEAN NOT NULL ,
                 `ven` BOOLEAN NOT NULL ,
+                `montant` FLOAT(11) NOT NULL ,
                 PRIMARY KEY (`id`)) ENGINE = InnoDB;";
 
       $sql_tartinette_orders =
         "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}wp_tartinette_orders (
                 `id` INT NOT NULL AUTO_INCREMENT ,
                 `ids_orders` VARCHAR(50) NOT NULL ,
+                `montant` FLOAT(11) NOT NULL ,
                 PRIMARY KEY (`id`)) ENGINE = InnoDB;";
 
       $wpdb->query($sql_tartinette_users);

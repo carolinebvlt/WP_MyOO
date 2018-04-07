@@ -13,16 +13,22 @@ class MyOO_Orders_Manager
       'mar'         => $order['days']['mar'],
       'mer'         => $order['days']['mer'],
       'jeu'         => $order['days']['jeu'],
-      'ven'         => $order['days']['ven']
+      'ven'         => $order['days']['ven'],
+      'montant'     => $order['montant']
     ]);
     return $wpdb->insert_id;
   }
 
-  public function save_order($ids_order){
+  public function save_order($ids_order,$montants){
     $ids_str = implode(',',$ids_order);
+    $count = 0;
+    foreach ($montants as $cout) {
+      $count += $cout;
+    }
     global $wpdb;
     $wpdb->insert("{$wpdb->prefix}tartinette_orders", [
-      'ids_orders' => $ids_str
+      'ids_orders' => $ids_str,
+      'montant'    => $count
     ]);
   }
 }

@@ -324,7 +324,6 @@ class MyOO_Users_Organizer
         'jeu' => false,
         'ven' => false,
       ];
-
       foreach ($order[0] as $jour) {
         switch ($jour) {
           case 'lundi': $days['lun'] = true ; break;
@@ -334,6 +333,7 @@ class MyOO_Users_Organizer
           case 'vendredi': $days['ven'] = true ; break;
         }
       }
+
       $order = [
         'id_child'    => $id_child,
         'pain'        => $pain,
@@ -342,10 +342,24 @@ class MyOO_Users_Organizer
         'next_monday' => $next_monday,
         'days'        => $days
       ];
+
+      $montant = $this->get_cost($order);
+
+      $order = [
+        'id_child'    => $id_child,
+        'pain'        => $pain,
+        'portion'     => $portion,
+        'fruit'       => $fruit,
+        'next_monday' => $next_monday,
+        'days'        => $days,
+        'montant'     => $montant
+      ];
+
       $id_order = $this->orders_manager->save_single_order($order);
       $ids_order[] = $id_order;
+      $montants[] = $montant;
     }
-    $this->orders_manager->save_order($ids_order);
+    $this->orders_manager->save_order($ids_order, $montants);
   }
 
   private function next_monday(){
@@ -364,6 +378,24 @@ class MyOO_Users_Organizer
     $next_monday = new DateTime();
     $next_monday->add($interval);
     return $next_monday->format('d-m-Y');
+  }
+
+  private function get_cost($order){
+    $count = 0;
+    foreach ($order['days'] as $day){
+      if($day === true){
+        $count += 1;
+      }
+    }
+    $option_name = $order['portion']."_".$count."j";
+    $montant_sans_fruit = get_option($option_name);
+    if($order['fruit'] === '1'){
+      $montant = $montant_sans_fruit + ((float)get_option('supplement_fruit') * $count);
+    }
+    else{
+      $montant = (float)$montant_sans_fruit;
+    }
+    return $montant;
   }
 
 
