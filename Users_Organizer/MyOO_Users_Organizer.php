@@ -6,13 +6,14 @@ session_start();
 
 class MyOO_Users_Organizer
 {
-  private $users_manager,
+  private $pages_manager,
+          $users_manager,
           $orders_manager;
 
   public function __construct(){
     include_once plugin_dir_path( __FILE__ ).'/MyOO_Users_Manager.php';
     $this->users_manager = new MyOO_Users_Manager();
-    include_once plugin_dir_path( __FILE__ ).'/MyOO_Pages_Manager.php';
+    include_once plugin_dir_path( __FILE__ ).'../MyOO_Pages_Manager.php';
     $this->pages_manager = new MyOO_Pages_Manager();
     include_once plugin_dir_path( __FILE__ ).'../Orders_Organizer/MyOO_Orders_Manager.php';
     $this->orders_manager = new MyOO_Orders_Manager();
