@@ -6,13 +6,16 @@ session_start();
 
 class MyOO_Users_Organizer
 {
-  private $users_manager;
+  private $users_manager,
+          $orders_manager;
 
   public function __construct(){
     include_once plugin_dir_path( __FILE__ ).'/MyOO_Users_Manager.php';
     $this->users_manager = new MyOO_Users_Manager();
     include_once plugin_dir_path( __FILE__ ).'/MyOO_Pages_Manager.php';
     $this->pages_manager = new MyOO_Pages_Manager();
+    include_once plugin_dir_path( __FILE__ ).'../Orders_Organizer/MyOO_Orders_Manager.php';
+    $this->orders_manager = new MyOO_Orders_Manager();
     add_action('admin_menu', [$this, 'add_admin_menu_users'], 20);
     add_action('init', [$this->pages_manager, 'add_tartinette_home_page']);
     add_action('init', [$this->pages_manager, 'add_subscription_page']);
@@ -92,6 +95,7 @@ class MyOO_Users_Organizer
 
     elseif (isset($_POST['save_order_week'])){
       $array_orders = $this->get_array_orders();
+      $this->save_orders($array_orders);
     }
 
     elseif (isset($_POST['save_order_panic'])){
@@ -295,6 +299,69 @@ class MyOO_Users_Organizer
       $commandes_finale[] = $this_com;
     }
     return $commandes_finale;
+  }
+
+  private function save_orders($array_orders){
+    /*
+    Need :
+      - id_child (int)
+      - pain (str)
+      - portion (str)
+      - date lundi (date)
+      - days ([])
+    */
+    foreach ($array_orders as $order) {
+
+      $id_child = $order['id'];
+      $pain = $this->users_manager->get_child_params($id_child)->pain;
+      $portion = $this->users_manager->get_child_params($id_child)->portion;
+      $next_monday = $this->next_monday();
+      $days = [
+        'lun' => false,
+        'mar' => false,
+        'mer' => false,
+        'jeu' => false,
+        'ven' => false,
+      ];
+
+      foreach ($order[0] as $jour) {
+        switch ($jour) {
+          case 'lundi': $days['lun'] = true ; break;
+          case 'mardi': $days['mar'] = true ; break;
+          case 'mercredi': $days['mer'] = true ; break;
+          case 'jeudi': $days['jeu'] = true ; break;
+          case 'vendredi': $days['ven'] = true ; break;
+        }
+      }
+      $order = [
+        'id_child' => $id_child,
+        'pain' => $pain,
+        'portion' => $portion,
+        'next_monday' => $next_monday,
+        'days' => $days
+      ];
+      $this->orders_manager->save_single_order($order);
+      // $ids_order[] = $id_order;
+    }
+    // var_dump($ids_order);
+  }
+
+  private function next_monday(){
+    $date = new DateTime();
+    $D = $date->format('N');
+    switch ($D) {
+      case '1': $_interval = 'P7D' ; break;
+      case '2': $_interval = 'P6D' ; break;
+      case '3': $_interval = 'P5D' ; break;
+      case '4': $_interval = 'P4D' ; break;
+      case '5': $_interval = 'P3D' ; break;
+      case '6': $_interval = 'P9D' ; break;
+      case '7': $_interval = 'P8D' ; break;
+    }
+    $interval = new DateInterval($_interval);
+    $next_monday = new DateTime();
+    $next_monday->add($interval);
+    return $next_monday->format('d-m-Y');
   }
 
 

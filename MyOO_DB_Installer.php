@@ -62,15 +62,17 @@ class MyOO_DB_Installer
                 ENGINE = InnoDB;";
 
       $sql_tartinette_orders =
-        "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}tartinette_orders (
+        "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}tartinette_single_orders (
                 `id` INT NOT NULL AUTO_INCREMENT ,
                 `id_child` INT NOT NULL ,
-                `week_nbr` TINYINT NOT NULL ,
-                `lundi` BOOLEAN NOT NULL ,
-                `mardi` BOOLEAN NOT NULL ,
-                `mercredi` BOOLEAN NOT NULL ,
-                `jeudi` BOOLEAN NOT NULL ,
-                `vendredi` BOOLEAN NOT NULL ,
+                `pain` VARCHAR(10) NOT NULL,
+                `portion` ENUM('S','M','L') NOT NULL,
+                `next_monday` VARCHAR(20) NOT NULL ,
+                `lun` BOOLEAN NOT NULL ,
+                `mar` BOOLEAN NOT NULL ,
+                `mer` BOOLEAN NOT NULL ,
+                `jeu` BOOLEAN NOT NULL ,
+                `ven` BOOLEAN NOT NULL ,
                 PRIMARY KEY (`id`)) ENGINE = InnoDB;";
 
       $wpdb->query($sql_tartinette_users);
