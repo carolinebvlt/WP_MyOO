@@ -106,6 +106,8 @@ class MyOO_Users_Organizer
 /*#################################################################################*/
 
   public function enqueue_datascripts(){
+
+
     if(is_page('Mon compte')){
       $data_children = $this->get_all_data();
       $portions = [

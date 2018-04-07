@@ -26,9 +26,11 @@ class MyOO_Orders_Manager
       $count += $cout;
     }
     global $wpdb;
+    $date = new DateTime();
     $wpdb->insert("{$wpdb->prefix}tartinette_orders", [
       'ids_orders' => $ids_str,
-      'montant'    => $count
+      'montant'    => $count,
+      'date_order' => $date->format('d-m-Y H:i:s')
     ]);
   }
 }
