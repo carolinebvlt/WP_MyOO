@@ -1,4 +1,4 @@
-console.log('Yoplait!!!!');
+console.log('Youuuuplait!!!!');
 // console.log(dataUser); // enfants
 // console.log(dataUser[1]); // portions dispo
 // console.log(dataUser[2]); // prix
@@ -57,11 +57,11 @@ function days_form(){
       var td4 = document.createElement('td');
       var td5 = document.createElement('td');
       var td6 = document.createElement('td');
-      td1.innerHTML = "<input type='checkbox' class='days' id='"+ e[0].id +"_td1' />";
-      td2.innerHTML = "<input type='checkbox' class='days' id='"+ e[0].id +"_td2'/>";
-      td3.innerHTML = "<input type='checkbox' class='days' id='"+ e[0].id +"_td3'/>";
-      td4.innerHTML = "<input type='checkbox' class='days' id='"+ e[0].id +"_td4'/>";
-      td5.innerHTML = "<input type='checkbox' class='days' id='"+ e[0].id +"_td5'/>";
+      td1.innerHTML = "<input type='checkbox' name='lundi_"+ e[0].id +"' class='days' id='"+ e[0].id +"_td1' />";
+      td2.innerHTML = "<input type='checkbox' name='mardi_"+ e[0].id +"' class='days' id='"+ e[0].id +"_td2'/>";
+      td3.innerHTML = "<input type='checkbox' name='mercredi_"+ e[0].id +"' class='days' id='"+ e[0].id +"_td3'/>";
+      td4.innerHTML = "<input type='checkbox' name='jeudi_"+ e[0].id +"' class='days' id='"+ e[0].id +"_td4'/>";
+      td5.innerHTML = "<input type='checkbox' name='vendredi_"+ e[0].id +"' class='days' id='"+ e[0].id +"_td5'/>";
       td6.innerHTML = "<div id='"+ e[0].id +"_td6' ></div>"
       tr.appendChild(td1);
       tr.appendChild(td2);
