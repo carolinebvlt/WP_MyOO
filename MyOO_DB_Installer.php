@@ -61,12 +61,13 @@ class MyOO_DB_Installer
                 `tartines` TEXT NOT NULL )
                 ENGINE = InnoDB;";
 
-      $sql_tartinette_orders =
+      $sql_tartinette_single_orders =
         "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}tartinette_single_orders (
                 `id` INT NOT NULL AUTO_INCREMENT ,
                 `id_child` INT NOT NULL ,
                 `pain` VARCHAR(10) NOT NULL,
                 `portion` ENUM('S','M','L') NOT NULL,
+                `fruit` BOOLEAN NOT NULL ,
                 `next_monday` VARCHAR(20) NOT NULL ,
                 `lun` BOOLEAN NOT NULL ,
                 `mar` BOOLEAN NOT NULL ,
@@ -75,12 +76,19 @@ class MyOO_DB_Installer
                 `ven` BOOLEAN NOT NULL ,
                 PRIMARY KEY (`id`)) ENGINE = InnoDB;";
 
+      $sql_tartinette_orders =
+        "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}wp_tartinette_orders (
+                `id` INT NOT NULL AUTO_INCREMENT ,
+                `ids_orders` VARCHAR(50) NOT NULL ,
+                PRIMARY KEY (`id`)) ENGINE = InnoDB;";
+
       $wpdb->query($sql_tartinette_users);
       $wpdb->query($sql_tartinette_children);
       $wpdb->query($sql_tartinette_child_params);
       $wpdb->query($sql_tartinette_likes);
       $wpdb->query($sql_tartinette_dislikes);
       $wpdb->query($sql_tartinette_already_had);
+      $wpdb->query($sql_tartinette_single_orders);
       $wpdb->query($sql_tartinette_orders);
     }
 } //end class

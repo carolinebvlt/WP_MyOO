@@ -315,6 +315,7 @@ class MyOO_Users_Organizer
       $id_child = $order['id'];
       $pain = $this->users_manager->get_child_params($id_child)->pain;
       $portion = $this->users_manager->get_child_params($id_child)->portion;
+      $fruit = $this->users_manager->get_child_params($id_child)->fruit;
       $next_monday = $this->next_monday();
       $days = [
         'lun' => false,
@@ -334,16 +335,17 @@ class MyOO_Users_Organizer
         }
       }
       $order = [
-        'id_child' => $id_child,
-        'pain' => $pain,
-        'portion' => $portion,
+        'id_child'    => $id_child,
+        'pain'        => $pain,
+        'portion'     => $portion,
+        'fruit'       => $fruit,
         'next_monday' => $next_monday,
-        'days' => $days
+        'days'        => $days
       ];
-      $this->orders_manager->save_single_order($order);
-      // $ids_order[] = $id_order;
+      $id_order = $this->orders_manager->save_single_order($order);
+      $ids_order[] = $id_order;
     }
-    // var_dump($ids_order);
+    $this->orders_manager->save_order($ids_order);
   }
 
   private function next_monday(){
