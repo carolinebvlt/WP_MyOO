@@ -304,14 +304,6 @@ class MyOO_Users_Organizer
   }
 
   private function save_orders($array_orders){
-    /*
-    Need :
-      - id_child (int)
-      - pain (str)
-      - portion (str)
-      - date lundi (date)
-      - days ([])
-    */
     foreach ($array_orders as $order) {
 
       $id_child = $order['id'];
@@ -335,7 +327,6 @@ class MyOO_Users_Organizer
           case 'vendredi': $days['ven'] = true ; break;
         }
       }
-
       $order = [
         'id_child'    => $id_child,
         'pain'        => $pain,
@@ -344,9 +335,7 @@ class MyOO_Users_Organizer
         'next_monday' => $next_monday,
         'days'        => $days
       ];
-
       $montant = $this->get_cost($order);
-
       $order = [
         'id_child'    => $id_child,
         'pain'        => $pain,
@@ -356,7 +345,6 @@ class MyOO_Users_Organizer
         'days'        => $days,
         'montant'     => $montant
       ];
-
       $id_order = $this->orders_manager->save_single_order($order);
       $ids_order[] = $id_order;
       $montants[] = $montant;
