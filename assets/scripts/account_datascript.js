@@ -1,4 +1,4 @@
-console.log('Yooooooplait!!!!');
+console.log('Yoplait!!!!');
 // console.log(dataUser); // enfants
 // console.log(dataUser[1]); // portions dispo
 // console.log(dataUser[2]); // prix
@@ -62,7 +62,7 @@ function days_form(){
       td3.innerHTML = "<input type='checkbox' class='days' id='"+ e[0].id +"_td3'/>";
       td4.innerHTML = "<input type='checkbox' class='days' id='"+ e[0].id +"_td4'/>";
       td5.innerHTML = "<input type='checkbox' class='days' id='"+ e[0].id +"_td5'/>";
-      td6.innerHTML = e[1].portion;
+      td6.innerHTML = "<div id='"+ e[0].id +"_td6' ></div>"
       tr.appendChild(td1);
       tr.appendChild(td2);
       tr.appendChild(td3);
@@ -76,11 +76,6 @@ function days_form(){
 
 
 function calcul_total(e){
-  // console.log(dataUser[2].L_1j);
-
-  // console.log(document.getElementById(e[0].id + '_td1'));
-  console.log(e);
-
   var count = 0;
   if(document.getElementById(e[0].id + '_td1').checked === true){
     count += 1;
@@ -130,14 +125,68 @@ function calcul_total(e){
       switch (count) {
         case 0: break;
         case 1 : Total = Total + sup_fruit + dataUser[2].L_1j; break;
-        case 2 : Total = Total + sup_fruit + dataUser[2].L_2j; break;
-        case 3 : Total = Total + sup_fruit + dataUser[2].L_3j; break;
-        case 4 : Total = Total + sup_fruit + dataUser[2].L_4j; break;
-        case 5 : Total = Total + sup_fruit + dataUser[2].L_5j; break;
+        case 2 : Total = Total + (sup_fruit*2) + dataUser[2].L_2j; break;
+        case 3 : Total = Total + (sup_fruit*3) + dataUser[2].L_3j; break;
+        case 4 : Total = Total + (sup_fruit*4) + dataUser[2].L_4j; break;
+        case 5 : Total = Total + (sup_fruit*5) + dataUser[2].L_5j; break;
       }
       break;
     default: console.log("OMG pas d'info !");break;
   }
+
+  nbr = nbr_tartines(e);
+  var table = document.getElementById('table_days');
+  var td6 = document.getElementById(e[0].id+'_td6');
+  switch (e[1].pain) {
+    case 'blanc': case 'cereales':
+      switch (e[1].fruit) {
+        case '0':
+          td6.innerHTML = "<table><tr><td>"+count+" x</td><td>"+nbr+" tartines</td></tr></table>";
+          break;
+        case '1' :
+          td6.innerHTML = "<table><tr><td>"+count+" x</td><td>"+nbr+" tartines</td></tr><tr><td>"+count+" x </td><td> 1 fruit</td></tr></table>";
+          break;
+      }
+      break;
+
+
+    case 'baguette':
+      switch (e[1].fruit) {
+        case '0':
+          td6.innerHTML = "<table><tr><td>"+count+" x</td><td> 1/"+nbr+" de baguette</td></tr></table>";
+          break;
+        case '1':
+          td6.innerHTML = "<table><tr><td>"+count+" x</td><td> 1/"+nbr+" de baguette</td></tr><tr><td>"+count+" x </td><td> 1 fruit</td></tr></table>";
+          break;
+      }
+      break;
+  }
+}
+
+function nbr_tartines(e){
+  // console.log(e[1].pain);
+  // console.log(e[1].portion);
+
+  var nbr;
+  switch (e[1].pain) {
+    case 'blanc': case 'cereales':
+      switch (e[1].portion) {
+        case 'S': nbr = dataUser[1]['S_tartines']; break;
+        case 'M': nbr = dataUser[1]['M_tartines']; break;
+        case 'L': nbr = dataUser[1]['L_tartines']; break;
+      }
+      break;
+
+    case 'baguette':
+      switch (e[1].portion) {
+        case 'S': nbr = dataUser[1]['S_baguette']; break;
+        case 'M': nbr = dataUser[1]['M_baguette']; break;
+        case 'L': nbr = dataUser[1]['L_baguette']; break;
+      }
+      break;
+  }
+  return nbr;
+
 
 }
 

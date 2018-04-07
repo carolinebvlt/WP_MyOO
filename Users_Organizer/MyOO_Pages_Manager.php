@@ -170,6 +170,7 @@ class MyOO_Pages_Manager
                     <th>Mer</th>
                     <th>Jeu</th>
                     <th>Ven</th>
+                    <td>Résumé</td>
                   </tr>
                 </table>
                 <div id='prix_total'>
