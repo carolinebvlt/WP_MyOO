@@ -177,7 +177,7 @@ class MyOO_Pages_Manager
                     <strong>Total : </strong> <span style='font-size:1.3em' id='total'></span> €
                 </div><br/>
                 <div>
-                  <input type='submit' name='commander' value='Commander' />
+                  <input type='submit' name='save_order_week' value='Commander' />
                 </div>
               </form>
             </div>";
@@ -243,7 +243,7 @@ class MyOO_Pages_Manager
                     <strong>Total : </strong> <span style='font-size:1.3em' id='total'></span> €
                 </div><br/>
                 <div>
-                  <input type='submit' name='commander' value='Commander' />
+                  <input type='submit' name='save_order_panic' value='Commander' />
                 </div>
               </form>
             </div>";

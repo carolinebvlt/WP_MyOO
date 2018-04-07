@@ -1,4 +1,7 @@
 <?php
+// echo '<pre>';
+// var_dump();
+// echo '</pre>';
 session_start();
 
 class MyOO_Users_Organizer
@@ -23,6 +26,8 @@ class MyOO_Users_Organizer
   public function add_admin_menu_users(){
     add_menu_page('My Users', 'My Users', 'manage_options', 'myoo_users', [$this, 'admin_users_html'], 'dashicons-groups', 27 );
   }
+
+/*################################## ROUTEUR ######################################*/
 
   public function routeur(){
     if (isset($_POST['go_abo'])){
@@ -84,7 +89,17 @@ class MyOO_Users_Organizer
       wp_redirect('http://localhost/php/wordpress/index.php/mon-compte/');
       exit;
     }
+
+    elseif (isset($_POST['save_order_week'])){
+      $array_orders = $this->get_array_orders();
+    }
+
+    elseif (isset($_POST['save_order_panic'])){
+
+    }
   }
+
+/*#################################################################################*/
 
   public function enqueue_datascripts(){
     if(is_page('Mon compte')){
@@ -225,6 +240,61 @@ class MyOO_Users_Organizer
     else{
       echo 'ERREUR ! Manque des champs !';
     }
+  }
+
+  private function get_array_orders(){
+    $les_regex = ['#^lundi#','#^mardi#','#^mercredi#','#^jeudi#','#^vendredi#'];
+    foreach ($_POST as $key => $value) {
+      foreach ($les_regex as $regex) {
+        if( preg_match($regex,$key) && $value === 'on' ){
+          $commandes[] = $key;
+        }
+      }
+    }
+    $commandes_par_enfant = [];
+    foreach ($commandes as $commande) {
+      $pieces = explode('_', $commande);
+      if(empty($commandes_par_enfant)){
+        $child = ['id' => $pieces[1]];
+        $commandes_par_enfant[] = $child;
+      }
+      else{
+        $y_est = false;
+        foreach ($commandes_par_enfant as $_child) {
+          if($pieces[1] === $_child['id']){
+            $y_est = true;
+          }
+        }
+        if($y_est === false){
+          $child = ['id' => $pieces[1]];
+          $commandes_par_enfant[] = $child;
+        }
+      }
+    }
+    $com_par_child = [];
+    foreach ($commandes_par_enfant as $_child) {
+      foreach ($commandes as $commande) {
+        $pieces = explode('_', $commande);
+        if($pieces[1]===$_child['id']){
+          $_child[] = $commande;
+        }
+      }
+      $com_par_child[] = $_child;
+    }
+
+    $commandes_finale = [];
+    foreach ($com_par_child as $com_child) {
+      $days = [];
+      foreach ($com_child as $key => $value) {
+        if($key !== 'id'){
+          $pieces = explode('_', $value);
+          $days[] = $pieces[0];
+        }
+      }
+      $this_com = ['id' => $com_child['id'], $days];
+      $commandes_finale[] = $this_com;
+    }
+    return $commandes_finale;
   }
 
 
