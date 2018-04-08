@@ -34,6 +34,12 @@ class MyOO_Orders_Manager
     ]);
   }
 
+  public function get_orders($monday){
+    global $wpdb;
+    $data = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}tartinette_single_orders WHERE monday = '$monday' ");
+    return $data;
+  }
+
   public function hello(){
     echo 'hello';
   }
