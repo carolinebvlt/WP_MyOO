@@ -303,11 +303,11 @@ class MyOO_Orders
             $numerateur_ven_baguette += 1;
           }
           $denominateur_commande = (int)get_option($commande->portion."_baguette");
-          $count_lun_baguette = $numerateur_lun_baguette / $denominateur_commande;
-          $count_mar_baguette = $numerateur_mar_baguette / $denominateur_commande;
-          $count_mer_baguette = $numerateur_mer_baguette / $denominateur_commande;
-          $count_jeu_baguette = $numerateur_jeu_baguette / $denominateur_commande;
-          $count_ven_baguette = $numerateur_ven_baguette / $denominateur_commande;
+          $count_lun_baguette += $numerateur_lun_baguette / $denominateur_commande;
+          $count_mar_baguette += $numerateur_mar_baguette / $denominateur_commande;
+          $count_mer_baguette += $numerateur_mer_baguette / $denominateur_commande;
+          $count_jeu_baguette += $numerateur_jeu_baguette / $denominateur_commande;
+          $count_ven_baguette += $numerateur_ven_baguette / $denominateur_commande;
           break;
       }
     }
