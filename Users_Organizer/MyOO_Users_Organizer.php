@@ -394,7 +394,7 @@ class MyOO_Users_Organizer
 /* ---------------- HTML --------------- */
 
   public function admin_users_html(){ // dont touch
-    $data = $users_manager->get_all_users();
+    $data = $this->users_manager->get_all_users();
     echo '<div class="wrap theme-options-page"><h1>'.get_admin_page_title().'</h1></div><br/>';
     echo "<table>";
     echo "<tr>

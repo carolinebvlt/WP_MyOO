@@ -102,7 +102,7 @@ class MyOO_Orders
               <h3 style='text-align:center'>Jour</h3>
               <i><p style='text-align:center;margin-bottom:0;font-size:0.9em;'>(Sélectionnez un jour)</p></i>
               <input type='date' name='date_day' value='".$date->format('Y-m-d')."' style='display:block;margin:auto;'/><br/>
-              <input type='submit' name='submit_display_orders' value='Afficher les commandes'style='display:block;margin:auto;'/>
+              <input type='submit' name='submit_display_orders' value='Afficher les commandes'style='display:block;margin:auto;padding:10px;'/>
             </form>
           </div>
           <div style='width:20%'>
@@ -110,7 +110,7 @@ class MyOO_Orders
               <h3 style='text-align:center'>Semaine</h3>
               <i><p style='text-align:center;margin-bottom:0;font-size:0.9em;'>(Sélectionnez le lundi de la semaine)</p></i>
               <input type='date' name='date_monday' value='".$this->next_monday()."' style='display:block;margin:auto;'/><br/>
-              <input type='submit' name='submit_display_orders' value='Afficher les commandes'style='display:block;margin:auto;'/>
+              <input type='submit' name='submit_display_orders' value='Afficher les commandes'style='display:block;margin:auto;padding:10px;'/>
             </form>
           </div>
           <div style='width:20%'>
@@ -118,7 +118,7 @@ class MyOO_Orders
               <h3 style='text-align:center'>Chef de tribu</h3>
               <i><p style='text-align:center;margin-bottom:0;font-size:0.9em;'>(Entrez le nom d'un utilisateur)</p></i>
               <input type='text' name='search_name' placeholder='Exemple : Bieuvelet' style='display:block;margin:auto;text-align:center;' /><br/>
-              <input type='submit' name='submit_display_orders' value='Afficher les commandes'style='display:block;margin:auto;'/>
+              <input type='submit' name='submit_display_orders' value='Afficher les commandes'style='display:block;margin:auto;padding:10px;'/>
             </form>
           </div>
         </div><br/><br/>";
@@ -296,22 +296,16 @@ class MyOO_Orders
     $count_fruits = ($count_fruits === 0) ? '-' : $count_fruits.' fruit(s)';
 
     echo "
-    <div class='wrap' style='width:60%;margin:auto;border:solid black 1px; border-radius:10px;padding:20px;margin-bottom:50px;'>
-      <h2 style='text-align:center;'>Résumé des commandes <strong>du ".$day->format('d-m-Y')."</strong></h2>
-      <table style='margin:auto;'>
-        <tr>
-          <th>Nombre :</th>
-          <td>".count($data)."</td>
-        </tr>
-        <tr>
-          <th>Total :</th>
-          <td>".$total." €</td>
-        </tr>
-      </table>
-          <table style='width:50%;margin:auto;border:solid chartreuse 1px;border-radius:10px;padding:10px;margin-bottom:10px;'>
+    <div class='wrap' style='width:60%;margin:auto;padding:20px;margin-bottom:50px;'>
+      <h2 style='text-align:center;margin-bottom:20px;'>Résumé des commandes <strong>du ".$day->format('d-m-Y')."</strong></h2>
+          <table style='width:50%;margin:auto;background-color:white;border-radius:10px;box-shadow:5px 10px 15px;padding:20px;margin-bottom:10px;'>
             <tr>
-              <th></th>
-              <th>TOTAL</th>
+              <th>Nbr commandes</th>
+              <td style='text-align:center;'>".count($data)."</td>
+            </tr>
+            <tr>
+              <th>Total €</th>
+              <td style='text-align:center;'>".$total." €</td>
             </tr>
             <tr>
               <th>Baguette </th>
@@ -536,19 +530,19 @@ class MyOO_Orders
     $count_blanc    = ($count_blanc === 0)    ? '-' : $count_blanc." tartines" ;
 
     echo "
-    <div class='wrap' style='width:60%;margin:auto;border:solid black 1px; border-radius:10px;padding:20px;margin-bottom:50px;'>
-      <h2 style='text-align:center;'>Résumé des commandes de la <strong>semaine du ".$monday."</strong></h2>
+    <div class='wrap' style='width:60%;margin:auto;padding:20px;margin-bottom:50px;'>
+      <h2 style='text-align:center;margin-bottom:20px'>Résumé des commandes de la <strong>semaine du ".$monday."</strong></h2>
       <table style='margin:auto;'>
         <tr>
-          <th>Nombre :</th>
-          <td>".count($data)."</td>
+          <th>Nbr commandes :</th>
+          <td style='text-align:center;'>".count($data)."</td>
         </tr>
         <tr>
           <th>Total :</th>
           <td>".$total." €</td>
         </tr>
       </table>
-          <table style='width:80%;margin:auto;border:solid chartreuse 1px;border-radius:10px;padding:10px;margin-bottom:10px;'>
+          <table style='width:80%;margin:auto;box-shadow:5px 10px 15px;background-color:white;border-radius:10px;padding:10px;margin-top:20px;margin-bottom:10px;'>
             <tr>
               <th></th>
               <th>Lun</th>
