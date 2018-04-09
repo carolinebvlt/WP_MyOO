@@ -108,7 +108,6 @@ class MyOO_Users_Organizer
 
   public function enqueue_datascripts(){
 
-
     if(is_page('Mon compte')){
       $data_children = $this->get_all_data();
       $portions = [
@@ -173,13 +172,13 @@ class MyOO_Users_Organizer
         wp_localize_script('panic_datascript', 'dataUser', $data);
         wp_enqueue_script('panic_datascript');
       }
-    }
+    } // end script panic
     if(is_page('Tartinette')){
       if(!wp_script_is('home_script')){
         wp_register_script('home_script', plugin_dir_url(__FILE__) . '../assets/scripts/home_script.js');
         wp_enqueue_script('home_script');
       }
-    }
+    }// end script home
   }
 
   private function get_all_data(){
@@ -389,23 +388,21 @@ class MyOO_Users_Organizer
     return $montant;
   }
 
-
-
-/* ---------------- HTML --------------- */
-
-  public function admin_users_html(){ // dont touch
+  public function admin_users_html(){
     $data = $this->users_manager->get_all_users();
     echo '<div class="wrap theme-options-page"><h1>'.get_admin_page_title().'</h1></div><br/>';
-    echo "<table>";
-    echo "<tr>
-            <th style='width:10%'>Nom</th>
-            <th style='width:10%'>Prénom</th>
-            <th style='width:10%'>Téléphone</th>
-            <th style='width:10%'>Email</th>
-            <th style='width:10%'>Tribu</th>
+    echo "<table style='font-size:1.2em;'>";
+    echo "<tr style='line-height:50px;'>
+            <th style='width:10%'><h3>Nom</h3></th>
+            <th style='width:10%'><h3>Prénom</h3></th>
+            <th style='width:10%'><h3>Téléphone</h3></th>
+            <th style='width:10%'><h3>Email</h3></th>
+            <th style='width:10%'><h3>Tribu</h3></th>
           </tr>";
     foreach ($data as $user) {
-      echo "<tr style='text-align:center'><td>".$user->last_name."</td><td>".$user->first_name."</td><td>".$user->phone."</td><td>".$user->email."</td><td>".$user->tribu."</td></tr>";
+      $a = str_split($user->phone);
+      $phoneNbr = $a[0].$a[1].$a[2].$a[3]." / ".$a[4].$a[5]." . ".$a[6].$a[7]." . ".$a[8].$a[9];
+      echo "<tr style='text-align:center;line-height:35px;'><td>".$user->last_name."</td><td>".$user->first_name."</td><td>".$phoneNbr."</td><td>".$user->email."</td><td>".$user->tribu."</td></tr>";
     }
     echo "</table>";
   }
