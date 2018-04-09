@@ -54,13 +54,6 @@ class MyOO_DB_Installer
                 `pesto` BOOLEAN NOT NULL )
                 ENGINE = InnoDB;";
 
-      $sql_tartinette_already_had =
-        "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}tartinette_already_had (
-                `week_nbr` TINYINT NOT NULL ,
-                `id_child` INT NOT NULL ,
-                `tartines` TEXT NOT NULL )
-                ENGINE = InnoDB;";
-
       $sql_tartinette_single_orders =
         "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}tartinette_single_orders (
                 `id` INT NOT NULL AUTO_INCREMENT ,
@@ -91,7 +84,6 @@ class MyOO_DB_Installer
       $wpdb->query($sql_tartinette_child_params);
       $wpdb->query($sql_tartinette_likes);
       $wpdb->query($sql_tartinette_dislikes);
-      $wpdb->query($sql_tartinette_already_had);
       $wpdb->query($sql_tartinette_single_orders);
       $wpdb->query($sql_tartinette_orders);
     }

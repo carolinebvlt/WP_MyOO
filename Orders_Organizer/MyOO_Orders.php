@@ -2,9 +2,6 @@
 // echo '<pre>';
 // var_dump();
 // echo '</pre>';
-/*
-  - Ajout sous-menu "Orders"
-*/
 
 class MyOO_Orders
 {
@@ -12,33 +9,14 @@ class MyOO_Orders
           $users_manager;
 
   public function __construct(){
-    add_action('admin_menu', [$this, 'add_admin_menu'], 30);
     include_once plugin_dir_path( __FILE__ ).'/MyOO_Orders_Manager.php';
     $this->orders_manager = new MyOO_Orders_Manager();
     include_once plugin_dir_path( __FILE__ ).'../Users_Organizer/MyOO_Users_Manager.php';
     $this->users_manager = new MyOO_Users_Manager();
   }
 
-  public function add_admin_menu(){
-    add_submenu_page('myoo', 'Commandes', 'Commandes', 'manage_options', 'myoo_orders', [$this, 'orders_render']);
-  }
 
-  public function orders_render(){
-    echo $this->my_fieldset();
-    if(isset($_POST['submit_display_orders'])){
-      if(isset($_POST['date_day'])){
-        $this->get_list_day($_POST['date_day']);
-      }
-      if(isset($_POST['date_monday'])){
-        $this->get_list_week($_POST['date_monday']);
-      }
-      if(isset($_POST['search_name'])){
-        $this->get_list_name($_POST['search_name']);
-      }
-    }
-  }
-
-  private function get_list_day($day){
+  public function get_list_day($day){
     $the_monday = $this->the_monday($day);// str lundi de la semaine
     $data = $this->orders_manager->get_orders($the_monday);
 
@@ -68,7 +46,7 @@ class MyOO_Orders
     }
   }
 
-  private function get_list_week($monday){
+  public function get_list_week($monday){
     // $monday = str "Y-m-d"
     // monday (db) = str "d-m-Y"
     $format_a_modifier = new DateTime($monday);
@@ -82,7 +60,7 @@ class MyOO_Orders
     }
   }
 
-  private function get_list_name($name){
+  public function get_list_name($name){
     $user = $this->users_manager->get_user_by_name($name);
     if(is_null($user)){
       echo '<h2 style="text-align:center">Pas d\'utilisateur nommé " '.$name.' "</h2>';
@@ -93,7 +71,7 @@ class MyOO_Orders
     }
   }
 
-  private function my_fieldset(){
+  public function my_fieldset(){
     $date = new DateTime();
     return "
         <div style='display:flex;justify-content:space-around;padding:20px;margin:20px;'>
@@ -124,7 +102,7 @@ class MyOO_Orders
         </div><br/><br/>";
   }
 
-  private function the_monday($day){
+  public function the_monday($day){
     $_day = new DateTime($day);
     $D = $_day->format('N');
     switch ($D) {
@@ -141,7 +119,7 @@ class MyOO_Orders
     return $_day->format('d-m-Y');
   }
 
-  private function next_monday(){
+  public function next_monday(){
     $date = new DateTime();
     $D = $date->format('N');
     switch ($D) {
@@ -159,7 +137,7 @@ class MyOO_Orders
     return $next_monday->format('Y-m-d');
   }
 
-  private function one_day_html(){
+  public function one_day_html(){
     return "<table style='border:solid black 1px'>
       <tr>
         <th >Date : </th>
@@ -260,7 +238,7 @@ class MyOO_Orders
     </div><br/>";
   }
 
-  private function display_list_day($data, $day){
+  public function display_list_day($data, $day){
     $total= 0;
     $count_baguette = 0;
     $count_blanc    = 0;
@@ -381,7 +359,7 @@ class MyOO_Orders
     echo "</table></div>";
   }
 
-  private function display_list_week($data, $monday){
+  public function display_list_week($data, $monday){
     // echo '<pre>';
     // print_r($data);
     // echo '</pre>';
@@ -638,7 +616,7 @@ class MyOO_Orders
     echo "</table></div>";
   }
 
-  private function display_list_name($orders){
+  public function display_list_name($orders){
     if(is_array($orders)){
       echo '<h2 style="text-align:center">Recherche pour : "'.$_POST['search_name'].'"</h2>';
       echo "
@@ -662,11 +640,11 @@ class MyOO_Orders
     }
   }
 
-  private function hello(){
+  public function hello(){
     return "hello";
   }
 
-  private function display_likes($likes){
+  public function display_likes($likes){
     $str_likes = '';
     foreach ($likes as $like) {
       $str_likes = $str_likes."<li>".$like."</li>";
@@ -674,7 +652,7 @@ class MyOO_Orders
     return $str_likes;
   }
 
-  private function display_dislikes($dislikes){
+  public function display_dislikes($dislikes){
     $str_dislikes = '';
     foreach ($dislikes as $dislike) {
       $str_dislikes = $str_dislikes."<li>".$dislike."</li>";
