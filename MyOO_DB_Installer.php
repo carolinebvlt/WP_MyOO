@@ -80,6 +80,7 @@ class MyOO_DB_Installer
       $sql_tartinette_orders =
         "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}wp_tartinette_orders (
                 `id` INT NOT NULL AUTO_INCREMENT ,
+                `id_chef_tribu` INT NOT NULL ,
                 `ids_orders` VARCHAR(50) NOT NULL ,
                 `date_order` VARCHAR(50) NOT NULL ,
                 `montant` FLOAT(11) NOT NULL ,

@@ -48,6 +48,11 @@ class MyOO_Users_Manager
     }
   }
 
+  public function get_user_by_name($name){
+    global $wpdb;
+    return $wpdb->get_row( "SELECT * FROM {$wpdb->prefix}tartinette_users WHERE last_name = '$name' ");
+  }
+
   public function get_all_users(){
     global $wpdb;
     $data = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}tartinette_users");

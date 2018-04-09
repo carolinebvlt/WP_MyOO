@@ -28,9 +28,10 @@ class MyOO_Orders_Manager
     global $wpdb;
     $date = new DateTime();
     $wpdb->insert("{$wpdb->prefix}tartinette_orders", [
-      'ids_orders' => $ids_str,
-      'montant'    => $count,
-      'date_order' => $date->format('d-m-Y H:i:s')
+      'id_chef_tribu' => $_SESSION['user_data']->id,
+      'ids_orders'    => $ids_str,
+      'montant'       => $count,
+      'date_order'    => $date->format('d-m-Y H:i:s')
     ]);
   }
 
@@ -38,6 +39,11 @@ class MyOO_Orders_Manager
     global $wpdb;
     $data = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}tartinette_single_orders WHERE monday = '$monday' ");
     return $data;
+  }
+
+  public function get_orders_by_id_chef($id){
+    global $wpdb;
+    return  $wpdb->get_results("SELECT * FROM {$wpdb->prefix}tartinette_orders WHERE id_chef_tribu = '$id' ");
   }
 
   public function hello(){
