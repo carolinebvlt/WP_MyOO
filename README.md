@@ -2,7 +2,9 @@
 
 ## WordPress plugin
 
-Plugin to save and organize __*Tartinette*__ 's orders to optimize their realization and distribution
+
+
+Plugin pour enregistrer et organiser les commandes de __*Tartinette*__
 
 ----
 
@@ -13,7 +15,7 @@ Plugin to save and organize __*Tartinette*__ 's orders to optimize their realiza
     - affiche tableau avec tous les inscrits
 
 
-  * Ajout 4 pages :
+  * Ajout 5 pages :
 
       - Tartinette (point d'entrée frontend)
 
@@ -21,26 +23,24 @@ Plugin to save and organize __*Tartinette*__ 's orders to optimize their realiza
 
       - Connexion
 
-      - Mon compte (affichage dynamique : scripts)
+      - Commander pour une semaine ('Mon compte')
+
+      - Panic
 
 ### Orders Organizer
-
-  * Ajout onglet "Tartines" au menu admin
-
-    - CPT 'tartine'
 
 
   * Ajout onglet "Order Organizer" au menu admin
 
-      - Ajout 3 sous-menus :
+      - Ajout 2 sous-menus :
 
         - Commandes :
 
-          - liste besoins commande totale du jour
+          - par jour
 
-          - liste commandes par composition
+          - par semaine
 
-        - Statistiques
+          - par nom
 
         - Paramètres :
 

@@ -63,7 +63,7 @@ class MyOO_Pages_Manager
                 <input type="text" name="email" placeholder="Email"/>
                 <input type="password" name="password" placeholder="Mot de passe"/>
                 <input type="password" name="password_check" placeholder="Confirmation du mot de passe"/>
-                <input type="submit" name="submit_registration" onclick="show(connexion_form, register_form)" value="S\'inscrire">
+                <input type="submit" name="submit_registration" onclick="show(connexion_form, register_form)" value="S\'inscrire" style="display:block;margin:auto;margin-bottom:50px;width:100%;">
               </form>
             </div>';
   }
@@ -71,13 +71,13 @@ class MyOO_Pages_Manager
   private function connexion_html(){
     return '<div id="connexion_form" class="wrap">
               <form method="post" action="">
-                <input type="text" name="email" placeholder="Votre email"/>
-                <input type="password" name="password" placeholder="Mot de passe"/>
-                <input type="submit" name="submit_connexion" value="Se connecter"/>
+                <input type="text" name="email" placeholder="Votre email" style="text-align:center;width:50%;margin:auto;"/>
+                <input type="password" name="password" placeholder="Mot de passe" style="text-align:center;width:50%;margin:auto;"/>
+                <input type="submit" name="submit_connexion" value="Se connecter" style="display:block;margin:auto;width:50%;"/>
               </form>
-              <p>ou</p>
+              <p style="text-align:center">ou</p>
               <form method="post" action="">
-                <input type="submit" name="go_subscription" value="S\'inscrire"/>
+                <input type="submit" name="go_subscription" value="S\'inscrire" style="display:block;margin:auto;"/>
               </form>
 
             </div>';

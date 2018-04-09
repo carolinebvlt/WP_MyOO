@@ -2,7 +2,7 @@
 /*
   - Ajout de l'onglet "Orders Organizer" dans le menu du dashboard
   - Ajout du sous-menu 'commandes' (remplace la page ajoutée d'office par wp)
-  - Include Statistics et Settings
+  - Include Settings
 */
 
 class MyOO_Orders_Organizer
@@ -12,8 +12,6 @@ class MyOO_Orders_Organizer
   public function __construct(){
     include_once plugin_dir_path( __FILE__ ).'/MyOO_Orders.php';
     $this->$Orders = new MyOO_Orders();
-    include_once plugin_dir_path( __FILE__ ).'/MyOO_Statistics.php';
-    new MyOO_Statistics();
     include_once plugin_dir_path( __FILE__ ).'/MyOO_Settings.php';
     new MyOO_Settings();
     add_action('admin_menu', [$this, 'add_admin_menu']);

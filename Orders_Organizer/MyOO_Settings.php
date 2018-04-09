@@ -46,9 +46,8 @@ class MyOO_Settings
   }
 
   public function params_render(){
-    echo '<div class="wrap theme-options-page"><h1>'.get_admin_page_title().'</h1></div>';
     ?>
-    <div class="wrap">
+    <div class="wrap" style="width:60%;display:block;margin:auto;">
       <form method="post" action="options.php">
         <?php
         settings_fields('portions_settings');
@@ -56,7 +55,7 @@ class MyOO_Settings
         settings_fields('prix_settings');
         do_settings_sections('prix_settings');
         ?>
-        <fieldset>
+        <fieldset style="margin-top:20px;margin-bottom:40px;">
           <legend><div class="wrap theme-options-page"><h2>Portions</h2></div></legend><br/>
           <table>
             <tr>
@@ -80,7 +79,7 @@ class MyOO_Settings
           </table>
         </fieldset><br/>
 
-        <fieldset>
+        <fieldset style="margin-bottom:40px;">
           <legend><div class="wrap theme-options-page"><h2>Prix</h2></div></legend>
           <div class="wrap theme-options-page">
             <table>

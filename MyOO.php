@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: MyOO
-Description: Orders organizer pour Tartinette
+Description: "My Orders Organizer" : plugin pour Tartinette.be
 Version: 0.1
 Author: CeaB
 */

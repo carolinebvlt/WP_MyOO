@@ -390,19 +390,18 @@ class MyOO_Users_Organizer
 
   public function admin_users_html(){
     $data = $this->users_manager->get_all_users();
-    echo '<div class="wrap theme-options-page"><h1>'.get_admin_page_title().'</h1></div><br/>';
-    echo "<table style='font-size:1.2em;'>";
+    echo "<table style='font-size:1.2em;width:80%;margin:auto;text-align:left;'>";
     echo "<tr style='line-height:50px;'>
-            <th style='width:10%'><h3>Nom</h3></th>
-            <th style='width:10%'><h3>Prénom</h3></th>
-            <th style='width:10%'><h3>Téléphone</h3></th>
-            <th style='width:10%'><h3>Email</h3></th>
-            <th style='width:10%'><h3>Tribu</h3></th>
+            <th style='width:20%'><h3>Nom</h3></th>
+            <th style='width:20%'><h3>Prénom</h3></th>
+            <th style='width:20%;'><h3>Téléphone</h3></th>
+            <th style='width:25%'><h3>Email</h3></th>
+            <th style='width:15%'><h3>Tribu</h3></th>
           </tr>";
     foreach ($data as $user) {
       $a = str_split($user->phone);
       $phoneNbr = $a[0].$a[1].$a[2].$a[3]." / ".$a[4].$a[5]." . ".$a[6].$a[7]." . ".$a[8].$a[9];
-      echo "<tr style='text-align:center;line-height:35px;'><td>".$user->last_name."</td><td>".$user->first_name."</td><td>".$phoneNbr."</td><td>".$user->email."</td><td>".$user->tribu."</td></tr>";
+      echo "<tr style='line-height:35px;'><td>".$user->last_name."</td><td>".$user->first_name."</td><td>".$phoneNbr."</td><td>".$user->email."</td><td>".$user->tribu."</td></tr>";
     }
     echo "</table>";
   }
