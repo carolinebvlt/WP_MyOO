@@ -46,7 +46,4 @@ class MyOO_Orders_Manager
     return  $wpdb->get_results("SELECT * FROM {$wpdb->prefix}tartinette_orders WHERE id_chef_tribu = '$id' ");
   }
 
-  public function hello(){
-    echo 'hello';
-  }
 }

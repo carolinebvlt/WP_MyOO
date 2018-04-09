@@ -1,7 +1,8 @@
 <?php
 /*
   - Ajout de l'onglet "Orders Organizer" dans le menu du dashboard
-  - Include : Orders, Statistics, Settings
+  - Ajout du sous-menu 'commandes' (remplace la page ajoutée d'office par wp)
+  - Include Statistics et Settings
 */
 
 class MyOO_Orders_Organizer
@@ -24,7 +25,7 @@ class MyOO_Orders_Organizer
   }
 
   public function orders_render(){
-    echo $this->$Orders->my_fieldset();
+    echo $this->$Orders->display_choices();
     if(isset($_POST['submit_display_orders'])){
       if(isset($_POST['date_day'])){
         $this->$Orders->get_list_day($_POST['date_day']);

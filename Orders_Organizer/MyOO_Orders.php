@@ -15,6 +15,36 @@ class MyOO_Orders
     $this->users_manager = new MyOO_Users_Manager();
   }
 
+  public function display_choices(){
+    $date = new DateTime();
+    return "
+        <div style='display:flex;justify-content:space-around;padding:20px;margin:20px;'>
+          <div style='width:20%;'>
+            <form method='post' action=''>
+              <h3 style='text-align:center'>Jour</h3>
+              <i><p style='text-align:center;margin-bottom:0;font-size:0.9em;'>(Sélectionnez un jour)</p></i>
+              <input type='date' name='date_day' value='".$date->format('Y-m-d')."' style='display:block;margin:auto;'/><br/>
+              <input type='submit' name='submit_display_orders' value='Afficher les commandes'style='display:block;margin:auto;padding:10px;'/>
+            </form>
+          </div>
+          <div style='width:20%'>
+            <form method='post' action=''>
+              <h3 style='text-align:center'>Semaine</h3>
+              <i><p style='text-align:center;margin-bottom:0;font-size:0.9em;'>(Sélectionnez le lundi de la semaine)</p></i>
+              <input type='date' name='date_monday' value='".$this->next_monday()."' style='display:block;margin:auto;'/><br/>
+              <input type='submit' name='submit_display_orders' value='Afficher les commandes'style='display:block;margin:auto;padding:10px;'/>
+            </form>
+          </div>
+          <div style='width:20%'>
+            <form method='post' action=''>
+              <h3 style='text-align:center'>Chef de tribu</h3>
+              <i><p style='text-align:center;margin-bottom:0;font-size:0.9em;'>(Entrez le nom d'un utilisateur)</p></i>
+              <input type='text' name='search_name' placeholder='Exemple : Bieuvelet' style='display:block;margin:auto;text-align:center;' /><br/>
+              <input type='submit' name='submit_display_orders' value='Afficher les commandes'style='display:block;margin:auto;padding:10px;'/>
+            </form>
+          </div>
+        </div><br/><br/>";
+  }
 
   public function get_list_day($day){
     $the_monday = $this->the_monday($day);// str lundi de la semaine
@@ -69,173 +99,6 @@ class MyOO_Orders
       $orders = $this->orders_manager->get_orders_by_id_chef($user->id);
       $this->display_list_name($orders);
     }
-  }
-
-  public function my_fieldset(){
-    $date = new DateTime();
-    return "
-        <div style='display:flex;justify-content:space-around;padding:20px;margin:20px;'>
-          <div style='width:20%;'>
-            <form method='post' action=''>
-              <h3 style='text-align:center'>Jour</h3>
-              <i><p style='text-align:center;margin-bottom:0;font-size:0.9em;'>(Sélectionnez un jour)</p></i>
-              <input type='date' name='date_day' value='".$date->format('Y-m-d')."' style='display:block;margin:auto;'/><br/>
-              <input type='submit' name='submit_display_orders' value='Afficher les commandes'style='display:block;margin:auto;padding:10px;'/>
-            </form>
-          </div>
-          <div style='width:20%'>
-            <form method='post' action=''>
-              <h3 style='text-align:center'>Semaine</h3>
-              <i><p style='text-align:center;margin-bottom:0;font-size:0.9em;'>(Sélectionnez le lundi de la semaine)</p></i>
-              <input type='date' name='date_monday' value='".$this->next_monday()."' style='display:block;margin:auto;'/><br/>
-              <input type='submit' name='submit_display_orders' value='Afficher les commandes'style='display:block;margin:auto;padding:10px;'/>
-            </form>
-          </div>
-          <div style='width:20%'>
-            <form method='post' action=''>
-              <h3 style='text-align:center'>Chef de tribu</h3>
-              <i><p style='text-align:center;margin-bottom:0;font-size:0.9em;'>(Entrez le nom d'un utilisateur)</p></i>
-              <input type='text' name='search_name' placeholder='Exemple : Bieuvelet' style='display:block;margin:auto;text-align:center;' /><br/>
-              <input type='submit' name='submit_display_orders' value='Afficher les commandes'style='display:block;margin:auto;padding:10px;'/>
-            </form>
-          </div>
-        </div><br/><br/>";
-  }
-
-  public function the_monday($day){
-    $_day = new DateTime($day);
-    $D = $_day->format('N');
-    switch ($D) {
-      case '1': $_interval = 'P0D' ; break;
-      case '2': $_interval = 'P1D' ; break;
-      case '3': $_interval = 'P2D' ; break;
-      case '4': $_interval = 'P3D' ; break;
-      case '5': $_interval = 'P4D' ; break;
-      case '6': $_interval = 'P5D' ; break;
-      case '7': $_interval = 'P6D' ; break;
-    }
-    $interval = new DateInterval($_interval);
-    $_day->sub($interval);
-    return $_day->format('d-m-Y');
-  }
-
-  public function next_monday(){
-    $date = new DateTime();
-    $D = $date->format('N');
-    switch ($D) {
-      case '1': $_interval = 'P0D' ; break;
-      case '2': $_interval = 'P6D' ; break;
-      case '3': $_interval = 'P5D' ; break;
-      case '4': $_interval = 'P4D' ; break;
-      case '5': $_interval = 'P3D' ; break;
-      case '6': $_interval = 'P2D' ; break;
-      case '7': $_interval = 'P1D' ; break;
-    }
-    $interval = new DateInterval($_interval);
-    $next_monday = new DateTime();
-    $next_monday->add($interval);
-    return $next_monday->format('Y-m-d');
-  }
-
-  public function one_day_html(){
-    return "<table style='border:solid black 1px'>
-      <tr>
-        <th >Date : </th>
-        <td></td>
-      </tr>
-      <tr>
-        <th >Nbr commandes : </th>
-        <td>X commandes</td>
-      </tr>
-      <tr>
-        <th >Nbr écoles : </th>
-        <td>X écoles</td>
-      </tr>
-      <tr>
-        <th>Total paiements : </th>
-        <td>X €</td>
-      </tr>
-    </table><br/>
-
-    <div class='wrap theme-options-page'>
-      <h3>Commande totale</h3>
-      <table>
-        <tr>
-          <th>Pain blanc : </th>
-          <td>X tranches</td>
-        </tr>
-        <tr>
-          <th>Pain 5 céréales : </th>
-          <td>X tranches</td>
-        </tr>
-        <tr>
-          <th>Baguette : </th>
-          <td>X baguettes</td>
-        </tr>
-        <tr>
-          <th>Fruits : </th>
-          <td>X fruits</td>
-        </tr>
-      </table><br/>
-
-      <h3>Par composition</h3>
-      <table>
-        <tr>
-          <th style='width:10%'></th>
-          <th style='width:10%'>Classique</th>
-          <th style='width:10%'>Dago</th>
-          <th style='width:10%'>Fromage</th>
-          <th style='width:10%'>Autre Fromage</th>
-          <th style='width:10%'>Italien</th>
-          <th style='width:10%'>Halal</th>
-        </tr>
-        <tr style='text-align:center'>
-          <th>Pain blanc<br/><i>(nbr de tranches)</i></th>
-          <td>X </td>
-          <td>X </td>
-          <td>X </td>
-          <td>X </td>
-          <td>X </td>
-          <td>X </td>
-        </tr>
-        <tr style='text-align:center'>
-          <th>Pain 5 céréales<br/><i>(nbr de tranches)</i></th>
-          <td>X </td>
-          <td>X </td>
-          <td>X </td>
-          <td>X </td>
-          <td>X </td>
-          <td>X </td>
-        </tr>
-        <tr style='text-align:center'>
-          <th>1/4 de baguette<br/><i>(nbr portions)</i></th>
-          <td>X </td>
-          <td>X </td>
-          <td>X </td>
-          <td>X </td>
-          <td>X </td>
-          <td>X </td>
-        </tr>
-        <tr style='text-align:center'>
-          <th>1/3 de baguette<br/><i>(nbr portions)</i></th>
-          <td>X </td>
-          <td>X </td>
-          <td>X </td>
-          <td>X </td>
-          <td>X </td>
-          <td>X </td>
-        </tr>
-        <tr style='text-align:center'>
-          <th>1/2 de baguette<br/><i>(nbr portions)</i></th>
-          <td>X </td>
-          <td>X </td>
-          <td>X </td>
-          <td>X </td>
-          <td>X </td>
-          <td>X </td>
-        </tr>
-      </table><br/>
-    </div><br/>";
   }
 
   public function display_list_day($data, $day){
@@ -640,8 +503,39 @@ class MyOO_Orders
     }
   }
 
-  public function hello(){
-    return "hello";
+  public function the_monday($day){
+    $_day = new DateTime($day);
+    $D = $_day->format('N');
+    switch ($D) {
+      case '1': $_interval = 'P0D' ; break;
+      case '2': $_interval = 'P1D' ; break;
+      case '3': $_interval = 'P2D' ; break;
+      case '4': $_interval = 'P3D' ; break;
+      case '5': $_interval = 'P4D' ; break;
+      case '6': $_interval = 'P5D' ; break;
+      case '7': $_interval = 'P6D' ; break;
+    }
+    $interval = new DateInterval($_interval);
+    $_day->sub($interval);
+    return $_day->format('d-m-Y');
+  }
+
+  public function next_monday(){
+    $date = new DateTime();
+    $D = $date->format('N');
+    switch ($D) {
+      case '1': $_interval = 'P0D' ; break;
+      case '2': $_interval = 'P6D' ; break;
+      case '3': $_interval = 'P5D' ; break;
+      case '4': $_interval = 'P4D' ; break;
+      case '5': $_interval = 'P3D' ; break;
+      case '6': $_interval = 'P2D' ; break;
+      case '7': $_interval = 'P1D' ; break;
+    }
+    $interval = new DateInterval($_interval);
+    $next_monday = new DateTime();
+    $next_monday->add($interval);
+    return $next_monday->format('Y-m-d');
   }
 
   public function display_likes($likes){
