@@ -4,7 +4,7 @@
 
 
 
-Plugin pour enregistrer et organiser les commandes de __*Tartinette*__
+Plugin pour enregistrer et organiser les commandes de __*Tartinette.be*__
 
 ----
 
